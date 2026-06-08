@@ -1,12 +1,15 @@
 package com.easybuy.cart_order.configurations;
 
 import com.easybuy.cart_order.HttpInterface.HttpInterface;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+
+import javax.management.modelmbean.ModelMBean;
 
 @Configuration
 public class AppConfig {
@@ -38,5 +41,10 @@ public class AppConfig {
 
         // 4. Create and return the proxy implementation of the interface
         return factory.createClient(HttpInterface.class);
+    }
+
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 }

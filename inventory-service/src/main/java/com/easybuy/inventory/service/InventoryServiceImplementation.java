@@ -2,6 +2,7 @@ package com.easybuy.inventory.service;
 
 import com.easybuy.inventory.domain.InventoryItem;
 import com.easybuy.inventory.dto.*;
+import com.easybuy.inventory.external.ProductClient;
 import com.easybuy.inventory.repository.InventoryRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +21,21 @@ public class InventoryServiceImplementation implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
     private final ModelMapper modelMapper;
+    private final ProductClient productClient;
 
     @Override
     public InventoryResponse createInventory(CreateInventoryRequest createInventoryRequest) {
-        String sku = normalizeSku(createInventoryRequest.sku());
 
+        // Check if product exists with given product Id
+        Product product = null;
+
+        try{
+            product = productClient.getProductById(createInventoryRequest.productId());
+        }catch (Exception e){
+            throw new RuntimeException("Product not found");
+        }
+
+        String sku = normalizeSku(createInventoryRequest.sku());
 
         // Check if this SKU is already assigned to other inventory item
         if(inventoryRepository.existsBySku(sku)) throw new RuntimeException("sku already exists : " + sku);
