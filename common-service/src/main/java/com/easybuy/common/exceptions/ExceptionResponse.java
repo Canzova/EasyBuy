@@ -1,4 +1,4 @@
-package easybuy.user_service.exception;
+package com.easybuy.common.exceptions;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

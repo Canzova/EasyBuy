@@ -1,5 +1,6 @@
 package com.easybuy.cart_order.dto;
 
+import com.easybuy.cart_order.dto.constants.CartStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,5 @@ public class CartResponse {
 
     private BigDecimal cartTotalPrice;
 
-    List<CartItemResponse> cartItemList = new ArrayList<>();
+    List<ItemResponse> cartItemList = new ArrayList<>();
 }

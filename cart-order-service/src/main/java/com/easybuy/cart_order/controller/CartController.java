@@ -1,13 +1,11 @@
 package com.easybuy.cart_order.controller;
 
 import com.easybuy.cart_order.Service.CartService;
-import com.easybuy.cart_order.dto.AddCartItemRequest;
-import com.easybuy.cart_order.dto.CartItemResponse;
+import com.easybuy.cart_order.dto.AddItemRequest;
+import com.easybuy.cart_order.dto.ItemResponse;
 import com.easybuy.cart_order.dto.CartResponse;
 import com.easybuy.cart_order.dto.UpdateCartItemRequest;
-import com.easybuy.common.dto.ProductResponseDto;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,16 +28,16 @@ public class CartController {
     }
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<CartItemResponse> saveItemToCart(@PathVariable UUID userId, @Valid @RequestBody AddCartItemRequest cartItemRequest){
-        CartItemResponse cartItemResponse = cartService.saveItemToCart(userId, cartItemRequest);
-        return ResponseEntity.ok(cartItemResponse);
+    public ResponseEntity<ItemResponse> saveItemToCart(@PathVariable UUID userId, @Valid @RequestBody AddItemRequest cartItemRequest){
+        ItemResponse itemResponse = cartService.saveItemToCart(userId, cartItemRequest);
+        return ResponseEntity.ok(itemResponse);
     }
 
     @PutMapping ("/user/{userId}/product/{productId}")
-    public ResponseEntity<CartItemResponse> updateCartItem(@PathVariable UUID userId, @PathVariable UUID productId,
-                                                           @Valid @RequestBody UpdateCartItemRequest updateCartItemRequest){
-        CartItemResponse cartItemResponse = cartService.updateCartItem(userId, productId, updateCartItemRequest);
-        return ResponseEntity.ok(cartItemResponse);
+    public ResponseEntity<ItemResponse> updateCartItem(@PathVariable UUID userId, @PathVariable UUID productId,
+                                                       @Valid @RequestBody UpdateCartItemRequest updateCartItemRequest){
+        ItemResponse itemResponse = cartService.updateCartItem(userId, productId, updateCartItemRequest);
+        return ResponseEntity.ok(itemResponse);
     }
 
     @DeleteMapping("/user/{userId}/product/{productId}")

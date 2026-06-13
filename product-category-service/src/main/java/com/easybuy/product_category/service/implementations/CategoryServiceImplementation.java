@@ -1,10 +1,10 @@
 package com.easybuy.product_category.service.implementations;
 
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.dto.CategoryRequestDto;
 import com.easybuy.product_category.dto.CategoryResponseDto;
 import com.easybuy.product_category.dto.PageCategoryResponseDto;
 import com.easybuy.product_category.entity.Category;
-import com.easybuy.product_category.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.repository.CategoryRepository;
 import com.easybuy.product_category.service.CategoryService;
 import jakarta.transaction.Transactional;

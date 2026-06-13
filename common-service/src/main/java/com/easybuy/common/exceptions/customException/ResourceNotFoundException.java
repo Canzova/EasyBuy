@@ -1,4 +1,4 @@
-package com.easybuy.product_category.exceptions.customException;
+package com.easybuy.common.exceptions.customException;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

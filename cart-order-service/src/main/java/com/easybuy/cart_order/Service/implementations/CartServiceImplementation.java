@@ -2,13 +2,15 @@ package com.easybuy.cart_order.Service.implementations;
 
 import com.easybuy.cart_order.Service.CartService;
 import com.easybuy.cart_order.dto.*;
+import com.easybuy.cart_order.dto.constants.CartStatus;
 import com.easybuy.cart_order.entity.Cart;
-import com.easybuy.cart_order.entity.CartItem;
+import com.easybuy.cart_order.entity.Item;
 import com.easybuy.cart_order.external.clients.ProductClient;
 import com.easybuy.cart_order.external.clients.UserClient;
 import com.easybuy.cart_order.repositories.CartItemRepository;
 import com.easybuy.cart_order.repositories.CartRepository;
 import com.easybuy.common.dto.ProductResponseDto;
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -44,12 +46,12 @@ public class CartServiceImplementation implements CartService {
     }
 
     private @NonNull CartResponse getCartResponse(Cart cart) {
-        List<CartItemResponse> cartItemResponse = cart.getCartItemList().stream()
-                .map(item -> modelMapper.map(item, CartItemResponse.class))
+        List<ItemResponse> itemResponse = cart.getItemList().stream()
+                .map(item -> modelMapper.map(item, ItemResponse.class))
                 .toList();
 
         CartResponse cartResponse = modelMapper.map(cart, CartResponse.class);
-        cartResponse.setCartItemList(cartItemResponse);
+        cartResponse.setCartItemList(itemResponse);
         return cartResponse;
     }
 
@@ -60,7 +62,7 @@ public class CartServiceImplementation implements CartService {
                             .createdAt(Instant.now())
                             .updatedAt(Instant.now())
                             .userId(userId)
-                            .cartItemList(new ArrayList<>())
+                            .itemList(new ArrayList<>())
                             .cartStatus(CartStatus.ACTIVE)
                             .totalPrice(new BigDecimal(0))
                             .build();
@@ -73,65 +75,65 @@ public class CartServiceImplementation implements CartService {
         try{
             return userClient.getUserByUserId(userId);
         }catch (Exception e){
-            throw new RuntimeException("User not found");
+            throw new ResourceNotFoundException("User not found");
         }
     }
 
     @Override
-    public CartItemResponse saveItemToCart(UUID userId, AddCartItemRequest cartItemRequest) {
+    public ItemResponse saveItemToCart(UUID userId, AddItemRequest cartItemRequest) {
         UserDTO user = getUserFromId(userId);
         Cart cart = getCartFromUserId(userId);
         ProductResponseDto productResponseDto = getProduct(cartItemRequest.getProductId());
 
         // Check if this product is already present into cart then increment its count
-        CartItem existingCartItem = cart.getCartItemList().stream()
+        Item existingItem = cart.getItemList().stream()
                 .filter(existingProduct -> existingProduct.getProductId().equals(productResponseDto.getId()))
                 .findFirst()
                 .orElseGet(()->{
-                    CartItem newCartItem = CartItem.builder()
+                    Item newItem = Item.builder()
                             .cart(cart)
                             .quantity(0)
                             .productId(productResponseDto.getId())
                             .build();
 
-                    cart.getCartItemList().add(newCartItem);
-                    return newCartItem;
+                    cart.getItemList().add(newItem);
+                    return newItem;
                 });
 
-        existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItemRequest.getQuantity());
-        existingCartItem.setProductName(productResponseDto.getTitle());
-        existingCartItem.setUnitPrice(productResponseDto.getPrice());
-        existingCartItem.setDiscountedPrice(calculateFinalUnitPrice(productResponseDto.getPrice(), productResponseDto.getDiscount()));
-        existingCartItem.setDiscountPercentage(productResponseDto.getDiscount().intValue());
-        existingCartItem.setCartItemTotalPrice(existingCartItem.getDiscountedPrice().multiply(BigDecimal.valueOf(cartItemRequest.getQuantity())));
+        existingItem.setQuantity(existingItem.getQuantity() + cartItemRequest.getQuantity());
+        existingItem.setProductName(productResponseDto.getTitle());
+        existingItem.setUnitPrice(productResponseDto.getPrice());
+        existingItem.setDiscountedPrice(calculateFinalUnitPrice(productResponseDto.getPrice(), productResponseDto.getDiscount()));
+        existingItem.setDiscountPercentage(productResponseDto.getDiscount().intValue());
+        existingItem.setCartItemTotalPrice(existingItem.getDiscountedPrice().multiply(BigDecimal.valueOf(cartItemRequest.getQuantity())));
 
         cart.setTotalPrice(computeCartTotalPrice(cart));
 
-        existingCartItem = cartItemRepository.save(existingCartItem);
-        return modelMapper.map(existingCartItem, CartItemResponse.class);
+        existingItem = cartItemRepository.save(existingItem);
+        return modelMapper.map(existingItem, ItemResponse.class);
     }
 
     private static  BigDecimal computeCartTotalPrice(Cart cart) {
-        return cart.getCartItemList().stream()
-                .map(CartItem::getCartItemTotalPrice)
+        return cart.getItemList().stream()
+                .map(Item::getCartItemTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
-    public CartItemResponse updateCartItem(UUID userId, UUID productId, UpdateCartItemRequest updateCartItemRequest) {
+    public ItemResponse updateCartItem(UUID userId, UUID productId, UpdateCartItemRequest updateCartItemRequest) {
         UserDTO user = getUserFromId(userId);
         Cart cart = getCartFromUserId(userId);  // In persistent state
 
-       CartItem cartItem = cart.getCartItemList().stream()
+       Item item = cart.getItemList().stream()
                 .filter(existingProduct -> existingProduct.getProductId().equals(productId))
                 .findFirst()
-               .orElseThrow(()-> new RuntimeException("Product Not found into cart."));
+               .orElseThrow(()-> new ResourceNotFoundException("Product Not found into cart."));
 
-       cartItem.setQuantity(updateCartItemRequest.getQuantity());
-       cartItem.setCartItemTotalPrice(cartItem.getDiscountedPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
-       cartItemRepository.save(cartItem);
+       item.setQuantity(updateCartItemRequest.getQuantity());
+       item.setCartItemTotalPrice(item.getDiscountedPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+       cartItemRepository.save(item);
 
-       return modelMapper.map(cartItem, CartItemResponse.class);
+       return modelMapper.map(item, ItemResponse.class);
     }
 
     @Override
@@ -140,13 +142,13 @@ public class CartServiceImplementation implements CartService {
         Cart cart = getCartFromUserId(userId);
 
         // Step 1 : get the cartItem which has this product and delete it
-        CartItem cartItem = cart.getCartItemList().stream()
+        Item cartItem = cart.getItemList().stream()
                 .filter(item -> item.getProductId().equals(productId))
                 .findFirst()
-                .orElseThrow(()-> new RuntimeException("Product Not found into cart."));
+                .orElseThrow(()-> new ResourceNotFoundException("Product Not found into cart."));
 
         // You have orphan removal as true for cart so when you just remove it from cartItemList then hibernate will automatically deletes it
-        cart.getCartItemList().remove(cartItem);
+        cart.getItemList().remove(cartItem);
 
         // Step 2 : You also need to update the total price in cart
         cart.setTotalPrice(computeCartTotalPrice(cart));
@@ -172,13 +174,13 @@ public class CartServiceImplementation implements CartService {
             ProductResponseDto productResponseDto = productClient.getProductByProductId(productId);
 
             if(productResponseDto == null || productResponseDto.getIsLive() == null || !productResponseDto.getIsLive()) {
-                throw new RuntimeException("Product not found");
+                throw new ResourceNotFoundException("Product not found");
             }
 
             return productResponseDto;
         } catch (RuntimeException e) {
             log.debug(e.getMessage());
-            throw new RuntimeException("Product not found");
+            throw new ResourceNotFoundException("Product not found");
         }
     }
 }

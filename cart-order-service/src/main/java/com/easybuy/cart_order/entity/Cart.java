@@ -1,6 +1,6 @@
 package com.easybuy.cart_order.entity;
 
-import com.easybuy.cart_order.dto.CartStatus;
+import com.easybuy.cart_order.dto.constants.CartStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//@ToString
 public class Cart {
 
     @Id
@@ -40,7 +41,7 @@ public class Cart {
     private BigDecimal totalPrice;
 
     @OneToMany(mappedBy = "cart",  fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-    List<CartItem> cartItemList = new ArrayList<>();
+    List<Item> itemList = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

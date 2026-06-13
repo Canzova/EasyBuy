@@ -1,10 +1,10 @@
 package com.easybuy.product_category.service.implementations;
 
+import com.easybuy.common.exceptions.customException.ImageUploadFailedException;
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.dto.*;
 import com.easybuy.product_category.entity.Category;
 import com.easybuy.product_category.entity.Product;
-import com.easybuy.product_category.exceptions.customException.ImageUploadFailedException;
-import com.easybuy.product_category.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.repository.CategoryRepository;
 import com.easybuy.product_category.repository.ProductRepository;
 import com.easybuy.product_category.service.ImageStorageService;

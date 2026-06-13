@@ -1,8 +1,7 @@
 package com.easybuy.cart_order.repositories;
 
-import com.easybuy.cart_order.dto.CartStatus;
+import com.easybuy.cart_order.dto.constants.CartStatus;
 import com.easybuy.cart_order.entity.Cart;
-import com.easybuy.cart_order.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

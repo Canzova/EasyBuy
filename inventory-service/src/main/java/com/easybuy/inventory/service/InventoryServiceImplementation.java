@@ -1,5 +1,7 @@
 package com.easybuy.inventory.service;
 
+import com.easybuy.common.exceptions.customException.ResourceAlreadyExistsException;
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.inventory.domain.InventoryItem;
 import com.easybuy.inventory.dto.*;
 import com.easybuy.inventory.external.ProductClient;
@@ -38,7 +40,7 @@ public class InventoryServiceImplementation implements InventoryService {
         String sku = normalizeSku(createInventoryRequest.sku());
 
         // Check if this SKU is already assigned to other inventory item
-        if(inventoryRepository.existsBySku(sku)) throw new RuntimeException("sku already exists : " + sku);
+        if(inventoryRepository.existsBySku(sku)) throw new ResourceAlreadyExistsException("sku already exists : " + sku);
 
         // Check if product id is associated to a different inventory
         if(inventoryRepository.existsByProductId(createInventoryRequest.productId())) throw new RuntimeException("product already exists :  " + createInventoryRequest.productId());
@@ -70,14 +72,14 @@ public class InventoryServiceImplementation implements InventoryService {
     @Override
     @Transactional(readOnly = true)
     public InventoryResponse getInventoryBySku(String sku) {
-        InventoryItem inventoryItem = inventoryRepository.findBySku(sku).orElseThrow(()-> new RuntimeException("Inventory does not exists with sku : " + sku));
+        InventoryItem inventoryItem = inventoryRepository.findBySku(sku).orElseThrow(()-> new ResourceNotFoundException("Inventory does not exists with sku : " + sku));
         return inventoryItemToInventoryResponse(inventoryItem);
     }
 
     @Override
     @Transactional(readOnly = true)
     public InventoryResponse getInventoryByProductId(UUID productId) {
-        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(()-> new RuntimeException("Inventory does not exists with productId : " + productId));
+        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(()-> new ResourceNotFoundException("Inventory does not exists with productId : " + productId));
         return inventoryItemToInventoryResponse(inventoryItem);
     }
 
@@ -91,7 +93,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse adjustStockById(Long inventoryId, AdjustStockRequest adjustStockRequest) {
-        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + inventoryId));
+        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory does not exists with inventoryId : " + inventoryId));
         int newStock = safeInt(inventoryItem.getAvailableQuantity()) + adjustStockRequest.deltaStock();
 
         if(newStock < 0) throw new RuntimeException("Invalid delta-stock amount : " + adjustStockRequest.deltaStock());
@@ -102,7 +104,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse reserveInventoryByInventoryId(Long inventoryId, @Valid ReserveStock reserveStock) {
-        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + inventoryId));
+        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory does not exists with inventoryId : " + inventoryId));
 
         int reserveQuantity = safeInt(reserveStock.quantity());
         int availableQuantity = inventoryItem.getAvailableQuantity();
@@ -117,7 +119,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse releaseInventoryByInventoryId(Long inventoryId, @Valid ReleaseStock releaseStock) {
-        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + inventoryId));
+        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory does not exists with inventoryId : " + inventoryId));
 
         int reserveQuantityRequested = safeInt(releaseStock.quantity());
         int reserveQuantityAvailable = inventoryItem.getReservedQuantity();
@@ -133,7 +135,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse updateInventoryByInventoryId(Long inventoryId, UpdateInventoryRequest updateInventoryRequest) {
-        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + inventoryId));
+        InventoryItem inventoryItem = inventoryRepository.findByIdForUpdate(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory does not exists with inventoryId : " + inventoryId));
 
         inventoryItem.setProductName(updateInventoryRequest.productName());
         inventoryItem.setActive(updateInventoryRequest.active());
@@ -145,7 +147,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse reserveStockByProductId(UUID productId, ReserveStock reserveStock) {
-        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + productId));
+        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(() -> new RuntimeException("inventory does not exists with productId : " + productId));
 
         int reserveQuantity = safeInt(reserveStock.quantity());
         int availableQuantity = inventoryItem.getAvailableQuantity();
@@ -160,7 +162,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public InventoryResponse releaseStockByProductId(UUID productId, ReleaseStock releaseStock) {
-        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(() -> new RuntimeException("inventory does not exists with inventoryId : " + productId));
+        InventoryItem inventoryItem = inventoryRepository.findByProductId(productId).orElseThrow(() -> new ResourceNotFoundException("inventory does not exists with inventoryId : " + productId));
 
         int reserveQuantityRequested = safeInt(releaseStock.quantity());
         int reserveQuantityAvailable = inventoryItem.getReservedQuantity();
@@ -176,7 +178,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     @Override
     public void deleteInventoryByInventoryId(Long inventoryId) {
-        InventoryItem inventoryItem = inventoryRepository.findById(inventoryId).orElseThrow(() -> new RuntimeException("inventory not found"));
+        InventoryItem inventoryItem = inventoryRepository.findById(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory not found"));
         inventoryRepository.delete(inventoryItem);
     }
 

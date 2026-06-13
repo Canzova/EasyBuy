@@ -12,9 +12,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemResponse {
+public class ItemResponse {
 
-    private Long cartItemId;
+    private Long itemId;
 
     private UUID productId;
 
@@ -24,10 +24,10 @@ public class CartItemResponse {
 
     private Integer discountPercentage;
 
-    private Integer discountedPrice;
+    private BigDecimal discountedPrice;
 
     private Integer quantity;
 
-    private BigDecimal cartItemTotalPrice;
+    private BigDecimal itemTotalPrice;
 
 }

@@ -1,11 +1,11 @@
 package com.easybuy.product_category.service.implementations;
 
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.dto.PageReviewResponseDto;
 import com.easybuy.product_category.dto.ReviewRequestDto;
 import com.easybuy.product_category.dto.ReviewResponseDto;
 import com.easybuy.product_category.entity.Product;
 import com.easybuy.product_category.entity.Review;
-import com.easybuy.product_category.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.product_category.repository.ProductRepository;
 import com.easybuy.product_category.repository.ReviewRepository;
 import com.easybuy.product_category.service.ReviewService;

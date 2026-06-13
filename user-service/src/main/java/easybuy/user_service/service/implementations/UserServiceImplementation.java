@@ -1,12 +1,12 @@
 package easybuy.user_service.service.implementations;
 
+import com.easybuy.common.exceptions.customException.EmailAlreadyExistsException;
+import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import easybuy.user_service.dto.UserDTO;
 import easybuy.user_service.dto.UserPageResponse;
 import easybuy.user_service.dto.UserUpdateRequestDTO;
 import easybuy.user_service.dto.UserUpdateResponseDTO;
 import easybuy.user_service.entity.User;
-import easybuy.user_service.exception.customException.EmailAlreadyExistsException;
-import easybuy.user_service.exception.customException.ResourceNotFoundException;
 import easybuy.user_service.repository.UserRepository;
 import easybuy.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.UUID;

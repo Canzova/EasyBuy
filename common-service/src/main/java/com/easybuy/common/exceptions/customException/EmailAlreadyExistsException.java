@@ -1,4 +1,4 @@
-package easybuy.user_service.exception.customException;
+package com.easybuy.common.exceptions.customException;
 
 public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException(String message) {

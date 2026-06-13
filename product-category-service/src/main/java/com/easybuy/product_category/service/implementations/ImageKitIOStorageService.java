@@ -1,6 +1,6 @@
 package com.easybuy.product_category.service.implementations;
 
-import com.easybuy.product_category.exceptions.customException.ImageUploadFailedException;
+import com.easybuy.common.exceptions.customException.ImageUploadFailedException;
 import com.easybuy.product_category.service.ImageStorageService;
 import io.imagekit.client.ImageKitClient;
 import io.imagekit.client.okhttp.ImageKitOkHttpClient;

@@ -10,7 +10,6 @@ import org.hibernate.annotations.BatchSize;
 import java.math.BigDecimal;
 import java.util.*;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
