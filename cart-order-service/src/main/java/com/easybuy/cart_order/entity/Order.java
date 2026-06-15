@@ -6,6 +6,8 @@ import com.easybuy.cart_order.dto.constants.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -30,7 +32,8 @@ public class Order {
     @Column(nullable = false, unique = true, length = 36)
     private String orderNumber;
 
-    @Column(nullable = false, length = 120)
+    @JdbcTypeCode(SqlTypes.VARCHAR) // Store this uuid as a varchar
+    @Column(nullable = false, length = 36)
     private UUID userId;
 
     @Column(nullable = false, length = 120)

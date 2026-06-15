@@ -4,8 +4,17 @@ import com.easybuy.cart_order.dto.CheckoutRequest;
 import com.easybuy.cart_order.dto.OrderRequest;
 import com.easybuy.cart_order.dto.OrderResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface OrderService{
     OrderResponse checkout(UUID userId, CheckoutRequest checkoutRequest);
+
+    OrderResponse getOrderByOrderId(Long orderId);
+
+    OrderResponse getOrderByOrderNumber(String orderNumber);
+
+    List<OrderResponse> getAllOrdersOfUser(UUID userId);
+
+    OrderResponse cancelOrder(Long orderId);
 }

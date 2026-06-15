@@ -12,12 +12,14 @@ import com.easybuy.cart_order.entity.Order;
 import com.easybuy.cart_order.entity.OrderItem;
 import com.easybuy.cart_order.external.clients.InventoryClient;
 import com.easybuy.cart_order.external.clients.ProductClient;
+import com.easybuy.cart_order.producer.OrderEventProducer;
 import com.easybuy.cart_order.repositories.CartRepository;
 import com.easybuy.cart_order.repositories.OrderItemRepository;
 import com.easybuy.cart_order.repositories.OrderRepository;
 import com.easybuy.common.dto.InventoryResponse;
 import com.easybuy.common.dto.ReleaseStock;
 import com.easybuy.common.dto.ReserveStock;
+import com.easybuy.common.events.OrderEvent;
 import com.easybuy.common.exceptions.customException.BusinessException;
 import com.easybuy.common.exceptions.customException.ResourceEmptyException;
 import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
@@ -47,6 +49,7 @@ public class OrderServiceImplementation implements OrderService {
     private final ProductClient productClient;
     private final InventoryClient inventoryClient;
     private final OrderItemRepository orderItemRepository;
+    private final OrderEventProducer orderEventProducer;
 
 
     @Override
@@ -82,6 +85,12 @@ public class OrderServiceImplementation implements OrderService {
             cart.setTotalPrice(BigDecimal.ZERO);
             cartRepository.save(cart);
 
+            // Send event
+            log.info("Now sending order event to kafka broker.");
+            OrderEvent orderEvent = getOrderEventFromOrder(order, checkoutRequest, userId);
+            orderEventProducer.produceOrderEvent(orderEvent);
+            log.info("Finished sending order event to kafka broker.");
+
             return orderToOrderResponse(order);
         }catch (Exception e){
             log.info("Something went wrong when trying to reserve the product for user : {} with exception : {}", userId, e.getMessage());
@@ -101,6 +110,75 @@ public class OrderServiceImplementation implements OrderService {
         }
 
 
+    }
+
+    private static OrderEvent getOrderEventFromOrder(Order order, CheckoutRequest checkoutRequest ,UUID userId) {
+        log.info("Inside getOrderEventFromOrder");
+        OrderEvent orderEvent =  new OrderEvent();
+        orderEvent.setOrderId(order.getOrderId());
+        orderEvent.setOrderNumber(order.getOrderNumber());
+        orderEvent.setUserId(userId);
+        orderEvent.setBillingName(checkoutRequest.getBillingName());
+        orderEvent.setShippingAddress(checkoutRequest.getShippingAddress());
+        orderEvent.setOrderStatus(order.getOrderStatus().toString());
+        orderEvent.setCreatedAt(order.getCreatedAt());
+        orderEvent.setPaymentStatus(order.getPaymentStatus().toString());
+        orderEvent.setPaymentMethod(order.getPaymentMethod().toString());
+        orderEvent.setUpdatedAt(order.getUpdatedAt());
+        orderEvent.setBillingPhoneNumber(order.getBillingPhoneNumber());
+        orderEvent.setExtraInfo(order.getExtraInfo());
+        orderEvent.setCancelledAt(order.getCancelledAt());
+        orderEvent.setTotalAmount(order.getTotalAmount());
+        log.info("getOrderEventFromOrder method completed.");
+        return orderEvent;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OrderResponse getOrderByOrderId(Long orderId) {
+        return orderToOrderResponse(orderRepository.findById(orderId).orElseThrow(() ->new ResourceNotFoundException("Order not found for given OrderId")));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OrderResponse getOrderByOrderNumber(String orderNumber) {
+        return orderToOrderResponse(orderRepository.findByOrderNumberOrderByCreatedAtDesc(orderNumber).orElseThrow(() ->new ResourceNotFoundException("Order not found for given OrderId")));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getAllOrdersOfUser(UUID userId) {
+        List<Order>  orderList = orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
+
+        log.info("Got {} orders for user {}.", orderList.size(), userId);
+        return orderList.stream()
+                .map(this::orderToOrderResponse)
+                .toList();
+    }
+
+    @Override
+    public OrderResponse cancelOrder(Long orderId) {
+        log.info("Cancel order started.");
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found for given OrderId"));
+
+        log.info("Got order inside cancelorder {}.", order);
+        if(order.getOrderStatus() == OrderStatus.CANCELED){
+            throw new BusinessException("Order already cancelled");
+        }
+
+        log.info("Now releasing the orderItems in inventory.");
+        // Now you have to release the stocks which are reserved by this order
+        for(OrderItem orderItem : order.getOrderItemList()){
+            try{
+                inventoryClient.releaseByProductId(orderItem.getProductId(), new ReleaseStock(orderItem.getQuantity()));
+            }catch (Exception ex){
+                throw new BusinessException("Something went wrong when trying to release the product stock.");
+            }
+        }
+
+        order.setOrderStatus(OrderStatus.CANCELED);
+        order.setCancelledAt(Instant.now());
+        return orderToOrderResponse(orderRepository.save(order));
     }
 
     private OrderResponse orderToOrderResponse(Order order) {

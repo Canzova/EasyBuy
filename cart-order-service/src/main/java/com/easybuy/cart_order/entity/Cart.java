@@ -3,6 +3,8 @@ package com.easybuy.cart_order.entity;
 import com.easybuy.cart_order.dto.constants.CartStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -24,7 +26,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(nullable = false, length = 36)
     private UUID userId;
 
     @Enumerated(EnumType.STRING)

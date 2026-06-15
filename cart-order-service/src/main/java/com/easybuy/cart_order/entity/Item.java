@@ -2,6 +2,8 @@ package com.easybuy.cart_order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -23,6 +25,7 @@ public class Item {
     @JoinColumn(name = "cartId")
     private Cart cart;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR) // Store this uuid as a varchar
     @Column(nullable = false)
     private UUID productId;
 
