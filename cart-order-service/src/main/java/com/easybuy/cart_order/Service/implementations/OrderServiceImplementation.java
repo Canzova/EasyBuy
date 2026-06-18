@@ -181,6 +181,13 @@ public class OrderServiceImplementation implements OrderService {
         return orderToOrderResponse(orderRepository.save(order));
     }
 
+    @Override
+    public void updateOrderStatus(Long orderId, String paymentStatus) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found for given OrderId"));
+        order.setOrderStatus(OrderStatus.valueOf(paymentStatus));
+        orderRepository.save(order);
+    }
+
     private OrderResponse orderToOrderResponse(Order order) {
         log.info("Converting order to order response.");
 

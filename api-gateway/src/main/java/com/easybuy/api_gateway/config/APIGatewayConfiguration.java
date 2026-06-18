@@ -108,6 +108,34 @@ public class APIGatewayConfiguration {
                                 )
                                 .uri("lb://USER-SERVICE")
                 )
+                .route("inventory-service-route",
+                        predicateSpec -> predicateSpec.path("/inventory-service/**")
+                                .filters(filter -> filter
+                                        .rewritePath("/inventory-service/?(?<remaining>.*)", "/${remaining}")
+                                        .requestRateLimiter(rateLimiter ->
+                                                rateLimiter
+                                                        .setKeyResolver(userIdKeyResolver())
+                                                        .setRateLimiter(redisRateLimiter())
+                                        )
+                                        .circuitBreaker(cb -> cb
+                                                        .setName("inventory-service-circuit-breaker")
+                                                        .setFallbackUri("forward:/inventory-service-fallback")
+                                        )
+                                        .retry(retryConfig -> retryConfig
+                                                        .setRetries(3)
+                                                        .setMethods(HttpMethod.GET, HttpMethod.DELETE)
+                                                        .setBackoff(
+                                                                Duration.ofMillis(100),
+                                                                Duration.ofMillis(1000),
+                                                                2,
+                                                                true
+                                                        )
+
+                                                )
+
+                                )
+                                .uri("lb://INVENTORY-SERVICE")
+                )
 
 
                 .build();

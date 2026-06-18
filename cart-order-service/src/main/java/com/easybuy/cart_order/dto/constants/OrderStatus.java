@@ -7,5 +7,8 @@ public enum OrderStatus {
     DISPATCHED,
     IN_PROGRESS,
     OUT_FOR_DELIVERY,
-    DELIVERED
+    DELIVERED,
+    FAILED,
+    SUCCESS,
+    PAID
 }

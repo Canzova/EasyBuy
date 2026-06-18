@@ -18,4 +18,9 @@ public class ProductCategoryFallback {
     public Mono<String>  userServiceFallback(){
         return Mono.just("User Service is down, try again later.");
     }
+
+    @GetMapping("/inventory-service-fallback")
+    public Mono<String>  inventoryServiceFallback(){
+        return Mono.just("Inventory Service is down, try again later.");
+    }
 }
