@@ -1,10 +1,8 @@
 package easybuy.user_service.service;
 
-import easybuy.user_service.dto.UserDTO;
-import easybuy.user_service.dto.UserPageResponse;
-import easybuy.user_service.dto.UserUpdateRequestDTO;
-import easybuy.user_service.dto.UserUpdateResponseDTO;
+import easybuy.user_service.dto.*;
 import easybuy.user_service.entity.User;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 
@@ -20,4 +18,8 @@ public interface UserService {
     UserUpdateResponseDTO updateUser(UserUpdateRequestDTO userDTO, UUID userId);
 
     void deleteUserByUserId(UUID userId);
+
+    LoginResponse loginUser(@Valid LoginRequest loginRequest);
+
+    RefreshTokenResponse updateRefreshAndAccessToken(@Valid RefreshTokenRequest refreshTokenRequest);
 }

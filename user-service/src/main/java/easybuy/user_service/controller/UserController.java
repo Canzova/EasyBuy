@@ -1,10 +1,7 @@
 package easybuy.user_service.controller;
 
 import easybuy.user_service.configuration.AppConstants;
-import easybuy.user_service.dto.UserDTO;
-import easybuy.user_service.dto.UserPageResponse;
-import easybuy.user_service.dto.UserUpdateRequestDTO;
-import easybuy.user_service.dto.UserUpdateResponseDTO;
+import easybuy.user_service.dto.*;
 import easybuy.user_service.entity.User;
 import easybuy.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +58,17 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable UUID userId){
         userService.deleteUserByUserId(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> userLogin(@Valid @RequestBody LoginRequest loginRequest){
+        LoginResponse loginResponse = userService.loginUser(loginRequest);
+        return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<RefreshTokenResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
+        RefreshTokenResponse refreshTokenResponse = userService.updateRefreshAndAccessToken(refreshTokenRequest);
+        return ResponseEntity.ok(refreshTokenResponse);
     }
 }
