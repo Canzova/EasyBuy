@@ -1,7 +1,6 @@
 package com.easybuy.common.exceptions;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ public class ExceptionResponse {
     private Integer errorCode;
     private HttpStatus error;
 
-    @CreationTimestamp
     private LocalDateTime timestamp;
 
     private String path;

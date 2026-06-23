@@ -21,8 +21,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,13 +47,13 @@ public class UserServiceImplementation implements UserService {
 
         // Before saving the user to DB, encode the password
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
+        user.setRole(Role.GUEST);
         user = userRepository.save(user);
         return modelMapper.map(user, UserDTO.class);
     }
 
     private User getUserFromDTO(UserDTO userDTO) {
-        if(userRepository.findByEmail(userDTO.getEmail()).isPresent()) throw new EmailAlreadyExistsException("Email already exists");
+        if(userRepository.findByUsername(userDTO.getUsername()).isPresent()) throw new EmailAlreadyExistsException("Email already exists");
         return modelMapper.map(userDTO, User.class);
     }
 
@@ -67,7 +65,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDTO getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException("User with given Email does not exists."));
+        User user = userRepository.findByUsername(email).orElseThrow(()-> new ResourceNotFoundException("User with given Email does not exists."));
         return modelMapper.map(user, UserDTO.class);
     }
 
@@ -111,7 +109,7 @@ public class UserServiceImplementation implements UserService {
 
             User user = (User) authentication.getPrincipal();
             String accessToken = jwtService.generateNewAccessToken(user.getUserId().toString(), user.getUsername(), user.getRole());
-            String refreshToken = jwtService.generateRefreshToken(user.getUserId().toString(), user.getUsername(), user.getRole();
+            String refreshToken = jwtService.generateRefreshToken(user.getUserId().toString(), user.getUsername(), user.getRole());
 
             storeRefreshTokenInDB(refreshToken, user);
 
@@ -128,10 +126,10 @@ public class UserServiceImplementation implements UserService {
 
     private void storeRefreshTokenInDB(String refreshToken, User user) {
         // Store the refresh token into db
-        RefreshToken refreshTokenEntity = RefreshToken.builder()
+        RefreshToken refreshTokenEntity = refreshTokenRepository.findByUser(user).orElse(RefreshToken.builder()
                 .refreshToken(refreshToken)
                 .user(user)
-                .build();
+                .build());
 
         refreshTokenRepository.save(refreshTokenEntity);
     }
@@ -158,7 +156,7 @@ public class UserServiceImplementation implements UserService {
         refreshToken = jwtService.generateRefreshToken(userId, username, role);
         String accessToken = jwtService.generateNewAccessToken(userId, username, role);
 
-        User user = userRepository.findByEmail(userId)
+        User user = userRepository.findByUsername(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User with given Email does not exists."));
 
         // Store the nre RefreshToken into DB

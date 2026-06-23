@@ -1,5 +1,6 @@
 package com.easybuy.api_gateway.config;
 
+import com.easybuy.api_gateway.filter.AuthenticationFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -15,6 +16,13 @@ import java.time.Duration;
 @Configuration
 public class APIGatewayConfiguration {
 
+    public APIGatewayConfiguration(AuthenticationFilter authenticationFilter) {
+        this.authenticationFilter = authenticationFilter;
+    }
+
+    private final AuthenticationFilter authenticationFilter;
+
+
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder
@@ -22,6 +30,7 @@ public class APIGatewayConfiguration {
                 .route("Product-Category-service",
                         predicateSpec -> predicateSpec.path("/product-category-service/**")
                                 .filters(filter -> filter
+                                        .filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
                                         .rewritePath("/product-category-service/?(?<remaining>.*)", "/${remaining}")
                                         .requestRateLimiter(rateLimiter ->
                                                 rateLimiter
@@ -53,6 +62,7 @@ public class APIGatewayConfiguration {
                 .route("Cart-Order-Service",
                         predicateSpec -> predicateSpec.path("/cart-order-service/**")
                                 .filters(filter -> filter
+                                        .filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
                                         .rewritePath("/cart-order-service/?(?<remaining>.*)", "/${remaining}")
                                         .requestRateLimiter(rateLimiter ->
                                                 rateLimiter
@@ -84,6 +94,7 @@ public class APIGatewayConfiguration {
                 .route("User-Service-Route",
                         predicateSpec -> predicateSpec.path("/user-service/**")
                                 .filters(filter-> filter
+                                        .filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
                                             .rewritePath("/user-service/?(?<remaining>.*)", "/${remaining}")
                                             .requestRateLimiter(rateLimiter ->
                                                         rateLimiter
@@ -111,6 +122,7 @@ public class APIGatewayConfiguration {
                 .route("inventory-service-route",
                         predicateSpec -> predicateSpec.path("/inventory-service/**")
                                 .filters(filter -> filter
+                                        .filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
                                         .rewritePath("/inventory-service/?(?<remaining>.*)", "/${remaining}")
                                         .requestRateLimiter(rateLimiter ->
                                                 rateLimiter

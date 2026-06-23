@@ -25,9 +25,9 @@ public class UserDTO {
     @Size(min = 3, max = 25, message = "Name should have at-least 3 and at-max 25 characters.")
     private String name;
 
-    @NotBlank(message = "Email cannot be blank or null.")
+    @NotBlank(message = "Username cannot be blank or null.")
     @Email
-    private String email;
+    private String username;
 
     @NotBlank(message = "Password cannot be blank or null.")
     @Size(min = 5, message = "Password should have at-least 5 characters.")
@@ -41,4 +41,6 @@ public class UserDTO {
     @NotBlank(message = "Phone cannot be blank or null.")
     @Size(min = 10, max = 10, message = "Phone number should be of exactly 10 digits")
     private String phone;
+
+    private String role;
 }

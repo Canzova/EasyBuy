@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    @Value("${jwt.secret-key:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4ZjQxYzY0Yi0yYjY0LTQ2NWEtYjM4Ny0zYjQ5YjQ5MjA1YzAiLCJuYW1lIjoiVGVzdCBVc2VyIiwiaWF0IjoxNzgyMTQ1NjAwfQ.v4sV1v6x4z9H7N4uK8cQmJ5Wf2YtR1nP3sE6dL0aB9Q}")
+    @Value("${jwt.secret-key:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9/eyJzdWIiOiI4ZjQxYzY0Yi0yYjY0LTQ2NWEtYjM4Ny0zYjQ5YjQ5MjA1YzAiLCJuYW1lIjoiVGVzdCBVc2VyIiwiaWF0IjoxNzgyMTQ1NjAwfQ=v4sV1v6x4z9H7N4uK8cQmJ5Wf2YtR1nP3sE6dL0aB9Q}")
     private String secretKey;
 
     @Value("${jwt.access-token-validation-milliseconds:3600000}")  // 1 Hour
