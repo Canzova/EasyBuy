@@ -169,7 +169,7 @@ public class APIGatewayConfiguration {
     public RedisRateLimiter redisRateLimiter() {
         return new RedisRateLimiter(
                 10, // replenishRate  ---> 10 tokens are added every second to the bucket.
-                15, // burstCapacity  ---> The bucket can hold a maximum of 10 tokens.
+                15, // burstCapacity  ---> The bucket can hold a maximum of 15 tokens.
                 5    // requested token  ---> Each request consumes 5 tokens.
         );
     }

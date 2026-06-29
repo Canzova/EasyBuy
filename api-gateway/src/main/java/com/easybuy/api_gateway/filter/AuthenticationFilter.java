@@ -57,6 +57,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         ? request.getRemoteAddress().getAddress().getHostAddress()
                         : "anonymous";
                 logger.info("This was a public endpoint, added user-id as : {}", clientIp);
+
                 ServerHttpRequest mutatedRequest = prepareHeader(request, clientIp, null, null);
                 return chain.filter(exchange.mutate().request(mutatedRequest).build());
             }
@@ -90,7 +91,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 if(expiration.before(new Date())) return onError(exchange, "JWT Token Expired", HttpStatus.UNAUTHORIZED);
                 
                 // Check if user has a valid Role
-                if(!isValidRole(tokenRole)) return onError(exchange, "Invalid role" + tokenRole, HttpStatus.UNAUTHORIZED);
+                if(!isValidRole(tokenRole)) return onError(exchange, "Invalid role " + tokenRole, HttpStatus.UNAUTHORIZED);
 
                 // Check if user trying to access admin only paths without admin role
                 if(isAdminOnlyEndpoint(path, method) && !tokenRole.equalsIgnoreCase("ADMIN")) return onError(exchange, "Invalid role, this is only for admin", HttpStatus.UNAUTHORIZED);

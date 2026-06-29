@@ -102,6 +102,12 @@
 			<version>3.2.5</version>
 		</dependency>
 
+		<!-- Exposes /actuator/prometheus endpoint in Prometheus text format -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
