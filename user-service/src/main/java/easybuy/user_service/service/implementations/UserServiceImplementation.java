@@ -112,7 +112,7 @@ public class UserServiceImplementation implements UserService {
             String refreshToken = jwtService.generateRefreshToken(user.getUserId().toString(), user.getUsername(), user.getRole());
 
             storeRefreshTokenInDB(refreshToken, user);
-
+            log.info("User {} has been logged in", user.getUsername());
             return LoginResponse.builder()
                     .username(user.getUsername())
                     .accessToken(accessToken)
