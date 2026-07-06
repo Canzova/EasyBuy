@@ -55,7 +55,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public OrderResponse checkout(UUID userId, CheckoutRequest checkoutRequest) {
         // Step 1 : Validate this userId
-        log.info("Chckout started.");
+        log.info("Checkout started.");
 
         // Step 2 : Get the cart
         Cart cart = cartRepository.findByUserIdAndCartStatus(userId, CartStatus.ACTIVE)
@@ -185,6 +185,10 @@ public class OrderServiceImplementation implements OrderService {
     public void updateOrderStatus(Long orderId, String paymentStatus) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found for given OrderId"));
         order.setOrderStatus(OrderStatus.valueOf(paymentStatus));
+        if(paymentStatus.equalsIgnoreCase("FAILED")){
+            order.setOrderStatus(OrderStatus.CANCELED);
+            order.setCancelledAt(Instant.now());
+        }
         orderRepository.save(order);
     }
 
@@ -192,10 +196,35 @@ public class OrderServiceImplementation implements OrderService {
         log.info("Converting order to order response.");
 
         List<ItemResponse> itemResponseList = order.getOrderItemList().stream()
-                        .map(item -> modelMapper.map(item, ItemResponse.class))
-                                .toList();
-        OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
-        orderResponse.setOrderItemList(itemResponseList);
+                .map(item -> new ItemResponse(
+                        item.getOrderItemId(),
+                        item.getProductId(),
+                        item.getProductName(),
+                        item.getUnitPrice(),
+                        item.getDiscountPercentage(),
+                        item.getDiscountedPrice(),
+                        item.getQuantity(),
+                        item.getTotalOrderItemPrice()
+                ))
+                .toList();
+
+        OrderResponse orderResponse = new OrderResponse(
+                order.getOrderId(),
+                order.getOrderNumber(),
+                order.getUserId(),
+                order.getBillingName(),
+                order.getBillingPhoneNumber(),
+                order.getShippingAddress(),
+                order.getPaymentStatus(),
+                order.getPaymentMethod(),
+                order.getOrderStatus(),
+                order.getTotalAmount(),
+                order.getCreatedAt(),
+                order.getUpdatedAt(),
+                order.getCancelledAt(),
+                order.getExtraInfo(),
+                itemResponseList
+        );
 
         log.info("Conversion of Order to Order Response completed.");
         return orderResponse;

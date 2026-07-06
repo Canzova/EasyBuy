@@ -26,7 +26,7 @@ public class Item {
     private Cart cart;
 
     @JdbcTypeCode(SqlTypes.VARCHAR) // Store this uuid as a varchar
-    @Column(nullable = false)
+    @Column(nullable = false, length = 36)
     private UUID productId;
 
     @Column(nullable = false)

@@ -1,12 +1,17 @@
 package com.easybuy.inventory.service;
 
+import com.easybuy.common.dto.OrderResponse;
+import com.easybuy.common.exceptions.customException.BusinessException;
 import com.easybuy.common.exceptions.customException.ResourceAlreadyExistsException;
 import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
 import com.easybuy.inventory.domain.InventoryItem;
 import com.easybuy.inventory.dto.*;
+import com.easybuy.inventory.external.OrderClient;
 import com.easybuy.inventory.external.ProductClient;
 import com.easybuy.inventory.repository.InventoryRepository;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,11 +24,13 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class InventoryServiceImplementation implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
     private final ModelMapper modelMapper;
     private final ProductClient productClient;
+    private final OrderClient orderClient;
 
     @Override
     public InventoryResponse createInventory(CreateInventoryRequest createInventoryRequest) {
@@ -167,12 +174,16 @@ public class InventoryServiceImplementation implements InventoryService {
         int reserveQuantityRequested = safeInt(releaseStock.quantity());
         int reserveQuantityAvailable = inventoryItem.getReservedQuantity();
 
+        log.info("Initial reserveQuantityAvailable found in db {}", reserveQuantityAvailable);
+        log.info("Quantity to be release {}", reserveQuantityRequested);
+
         if(reserveQuantityRequested < 0 || reserveQuantityRequested > reserveQuantityAvailable)
             throw new RuntimeException("Invalid release-level amount : " + reserveQuantityRequested);
 
         inventoryItem.setReservedQuantity(reserveQuantityAvailable -  reserveQuantityRequested);
 //        inventoryItem.setAvailableQuantity(inventoryItem.getAvailableQuantity() - reserveQuantityRequested);
 
+        log.info("reserveQuantityAvailable found in db {} after release stock", inventoryItem.getReservedQuantity());
         return inventoryItemToInventoryResponse(inventoryItem);
     }
 
@@ -180,6 +191,37 @@ public class InventoryServiceImplementation implements InventoryService {
     public void deleteInventoryByInventoryId(Long inventoryId) {
         InventoryItem inventoryItem = inventoryRepository.findById(inventoryId).orElseThrow(() -> new ResourceNotFoundException("inventory not found"));
         inventoryRepository.delete(inventoryItem);
+    }
+
+    @Override
+    public void handleFailedPayment(Long orderId) {
+        log.info("Inside method handleFailedPayment");
+
+        // Step 1 : Get the order
+        OrderResponse orderResponse = null;
+        try{
+            log.info("Making a feign client call to Order with orderId : {}", orderId);
+            ResponseEntity<OrderResponse> orderResponseResponseEntity = orderClient.getOrderByOrderId(orderId);
+            orderResponse = orderResponseResponseEntity.getBody();
+            log.info("Order response : {}", orderResponse);
+        }catch (Exception e){
+            log.error("Error occurred while calling OrderClient with orderId : {}", orderId);
+            throw new BusinessException("Error occurred while calling OrderClient", e);
+        }
+
+        // Step 2 : Get all the items and release them
+        if(orderResponse == null || orderResponse.getOrderItemList() == null || orderResponse.getOrderItemList().isEmpty()){
+            throw new BusinessException("Order response is empty");
+        }
+
+        orderResponse.getOrderItemList()
+                        .forEach(orderItem -> {
+                            log.info("OrderItem : {} and Quantity : {}", orderItem,  orderItem.getQuantity());
+                            releaseStockByProductId(orderItem.getProductId(), new ReleaseStock(orderItem.getQuantity()));
+                        });
+        log.info("Successfully completed Compensating Transaction for releasing the products.");
+
+        log.info("Method handleFailedPayment is completed.");
     }
 
     private int safeInt(Integer availableQuantity) {

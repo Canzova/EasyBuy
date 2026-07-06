@@ -69,6 +69,12 @@ public class GlobalExceptionHandler {
         return buildResponse(message, 400, HttpStatus.BAD_REQUEST, e);
     }
 
+    // 400 - Invalid argument (e.g. malformed or too large UUID string)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+        return buildResponse("Invalid argument: " + e.getMessage(), 400, HttpStatus.BAD_REQUEST, e);
+    }
+
     // 400 - Request body is missing or JSON is malformed
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {

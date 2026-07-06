@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.util.UnknownFormatFlagsException;
 
 
 @Service
@@ -49,6 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         //TODO: actual logic:---- payment gateway call karnge
+        if(2 > 1) throw new UnknownFormatFlagsException("Payment failed for Order ID: " + paymentRequest.getOrderId());
 
         // Simulate successful payment processing
         transaction.setStatus(PaymentStatus.PAID);

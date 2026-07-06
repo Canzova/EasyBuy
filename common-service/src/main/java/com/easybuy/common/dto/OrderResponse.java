@@ -1,10 +1,7 @@
-package com.easybuy.cart_order.dto;
-
-import com.easybuy.cart_order.dto.constants.OrderStatus;
-import com.easybuy.cart_order.dto.constants.PaymentMethod;
-import com.easybuy.cart_order.dto.constants.PaymentStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
+package com.easybuy.common.dto;
+import com.easybuy.common.dto.constants.OrderStatus;
+import com.easybuy.common.dto.constants.PaymentMethod;
+import com.easybuy.common.dto.constants.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,3 +48,4 @@ public class OrderResponse {
 
     private List<ItemResponse> orderItemList = new ArrayList<>();
 }
+

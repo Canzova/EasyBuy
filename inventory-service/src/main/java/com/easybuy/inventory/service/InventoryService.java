@@ -33,4 +33,6 @@ public interface InventoryService {
     InventoryResponse releaseStockByProductId(UUID productId, @Valid ReleaseStock request);
 
     void deleteInventoryByInventoryId(Long inventoryId);
+
+    void handleFailedPayment(Long orderId);
 }

@@ -23,7 +23,7 @@ public class OrderItem {
     private Long orderItemId;
 
     @JdbcTypeCode(SqlTypes.VARCHAR) // Store this uuid as a varchar
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false)
     private UUID productId;
 
     @Column(nullable = false)
