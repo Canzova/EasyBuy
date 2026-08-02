@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels: 
+    app: mysql-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-label-app-name
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        app: mysql-label-app-name
+    spec:
+      # Creating a volume to store the data
+      volumes:
+      - name: mysql-storage-volume
+        persistentVolumeClaim:
+          claimName: mysql-pvc # This is the PVC name inside metadata
+      containers:
+      - name: mysql-pod-container
+        image: mysql:8.4
+        ports:
+          - containerPort: 3306
+        # We are setting the env varibales as we have done in docker-compose file
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_DATABASE
+            value: planner_db   
+          - name: MYSQL_USER
+            value: username
+          - name: MYSQL_PASSWORD  
+            value: pwd
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: 512m
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        volumeMounts:
+          - name: mysql-storage-volume
+            mountPath: /var/lib/mysql # For the mysql container, the data which will be stored into this path ----> will not get stored into the volume directly
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql-service-lable-app
+spec:
+  selector:
+    app: mysql-label-app-name
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP

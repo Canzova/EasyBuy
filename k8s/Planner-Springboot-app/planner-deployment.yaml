@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: planner-deployment
+  labels: 
+    app: planner-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: planner-label-app-name
+  template:
+    metadata:
+      name: planner-pod
+      labels:
+        app: planner-label-app-name
+    spec:
+      containers:
+      - name: planner-pod-container
+        image: canzova/planner:1.2
+        ports:
+          - containerPort: 8080
+        # We also need to pass ENV vars so that our planner app can use it in .properties or .yml file to connect with MYSQL
+        env:
+          - name: DB_HOST
+            value: mysql-service # Host name shoudl be same as service/pod name in docker-compose and here also 
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_NAME
+            value: planner_db
+          - name: DB_USERNAME
+            value: username
+          - name: DB_PASSWORD
+            value: pwd
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: 100m
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: planner-service
+  labels:
+    app: planner-service-lable-app
+spec:
+  selector:
+    app: planner-label-app-name
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8080
+  type: LoadBalancer

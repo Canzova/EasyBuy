@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: mysql-pvc
+  labels: 
+    app: mysql-pvc-lable
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi # You are requesting for a resouce with 2 Gi storage, K8s will automaticlly bind you with the PV with storage >= 2Gi

@@ -1,7 +1,3 @@
-Absolutely! Since you're learning Kubernetes from scratch, here's a practical cheat sheet that follows the exact workflow we've covered. This is a sequence you'll use over and over while developing locally.
-
----
-
 # 🚀 Kubernetes Basic Workflow Cheat Sheet
 
 ## Step 1: Check your Kubernetes cluster
