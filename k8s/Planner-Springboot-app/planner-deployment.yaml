@@ -47,10 +47,11 @@ spec:
                 key: DB_USERNAME
 
           - name: DB_PASSWORD
-            secretKeyRef:
-              name: planner-secret
-              key: DB_PASSWORD
-              
+            valueFrom:
+              secretKeyRef:
+                name: planner-secret
+                key: DB_PASSWORD
+
         resources:
           requests:
             memory: "256Mi"
