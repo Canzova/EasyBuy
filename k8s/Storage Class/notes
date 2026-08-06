@@ -1,0 +1,122 @@
+# Kubernetes Notes: StorageClass, ConfigMap & Secret
+
+---
+
+## 1. StorageClass
+
+### 1.1 The Problem It Solves
+
+So far your flow has been **manual/static provisioning**:
+
+```
+You create PV (actual storage) ---> You create PVC (claim/request) ---> Pod uses PVC
+```
+
+You, the admin, had to manually create a `PersistentVolume` ahead of time (e.g. pointing to a hostPath, NFS share, or cloud disk). This doesn't scale in production — imagine 500 developers each needing a volume, and an admin manually creating 500 PVs. That's the problem `StorageClass` solves.
+
+**StorageClass = a "template"/"blueprint" that tells Kubernetes HOW to dynamically create a PV on demand**, instead of an admin pre-creating them.
+
+### 1.2 The Core Idea
+
+Instead of:
+```
+Admin creates PV manually --> User creates PVC --> Kubernetes binds PVC to matching PV
+```
+
+You now do:
+```
+Admin creates StorageClass (once) --> User creates PVC (referencing the StorageClass) 
+     --> Kubernetes AUTOMATICALLY creates the PV for you --> PVC binds to that new PV
+```
+
+This is called **dynamic provisioning**. No PV YAML needed at all — it's generated on the fly using a storage "provisioner" (a plugin, e.g. AWS EBS, GCE PD, Azure Disk, or `local-path` for local clusters like Minikube/Kind).
+
+
+### 1.4 Real-World Example — Spring Boot + MySQL on AWS
+
+Here's the same flow but with a concrete app stack (Spring Boot talking to MySQL) and a real cloud provisioner (AWS EBS):
+
+![StorageClass dynamic provisioning flow: Spring Boot Pod to Service to MySQL Pod to PVC, which references a StorageClass that calls the EBS CSI Driver to provision an Amazon EBS Disk, with a PV created inside the cluster to track it](./storageclass-diagram.png)
+
+
+### 1.5 YAML Example — StorageClass
+
+```yaml
+apiVersion: storage.k8s.io/v1        # API group for StorageClass objects
+kind: StorageClass                    # object type
+metadata:
+  name: fast-storage                  # name you'll reference from PVC
+provisioner: rancher.io/local-path    # WHO provisions the volume (plugin/driver)
+                                       # e.g. ebs.csi.aws.com (AWS), pd.csi.storage.gke.io (GCP),
+                                       # disk.csi.azure.com (Azure), rancher.io/local-path (local/minikube)
+reclaimPolicy: Delete                 # what happens to the PV when PVC is deleted
+                                       # Delete = auto-delete underlying storage
+                                       # Retain = keep the disk even after PVC is gone
+volumeBindingMode: WaitForFirstConsumer
+                                       # Immediate = PV created as soon as PVC is created
+                                       # WaitForFirstConsumer = PV created only when a Pod
+                                       # actually needs it (better for multi-zone clusters)
+allowVolumeExpansion: true            # allows you to later increase PVC size without recreating it
+parameters:
+  type: gp3                           # provisioner-specific settings, e.g. disk type on AWS EBS
+```
+
+**Line-by-line explanation:**
+
+| Field | Meaning |
+|---|---|
+| `provisioner` | The actual driver/plugin responsible for creating storage. Different for every cloud provider. This is the single most important field — it decides *where* the disk actually gets created. |
+| `reclaimPolicy` | Same concept as in PV, but now applied automatically to every dynamically created PV from this class. |
+| `volumeBindingMode` | Controls *when* the PV gets created. `WaitForFirstConsumer` is recommended so K8s can place the disk in the same zone/node as the Pod that will use it. |
+| `allowVolumeExpansion` | Lets you resize the PVC later (`kubectl edit pvc`) instead of deleting and recreating. |
+| `parameters` | Free-form key-values passed directly to the provisioner (disk type, IOPS, filesystem, etc.) — differs per cloud/plugin. |
+
+### 1.6 YAML Example — PVC using the StorageClass
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-app-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce                   # single node can mount read/write
+  storageClassName: fast-storage      # <-- references the StorageClass above
+                                       # NO PV is manually created; K8s does it for you
+  resources:
+    requests:
+      storage: 5Gi                    # desired size — provisioner creates a disk of this size
+```
+
+### 1.7 Using It in a Pod (same as before)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  containers:
+    - name: app
+      image: nginx
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: storage-vol
+  volumes:
+    - name: storage-vol
+      persistentVolumeClaim:
+        claimName: my-app-pvc          # points to the PVC, not the StorageClass directly
+```
+
+### 1.8 Quick Comparison
+
+| | Static (what you did) | Dynamic (StorageClass) |
+|---|---|---|
+| PV creation | Manual, by admin | Automatic, by provisioner |
+| Scalability | Poor (manual work per claim) | Great (self-service for devs) |
+| Used in | Learning / local hostPath setups | Production (cloud disks) |
+| You write | PV + PVC | Only PVC (+ StorageClass once, usually by cluster admin, often a *default* one already exists) |
+
+Tip: run `kubectl get storageclass` — most managed clusters (EKS/GKE/AKS) already ship a **default** StorageClass, so a PVC with no `storageClassName` at all still gets dynamically provisioned.
+
+---

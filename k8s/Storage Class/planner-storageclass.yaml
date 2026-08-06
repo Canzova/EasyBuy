@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: planner-storage-class
+
+# Privisioner is a plugin which knows how to create storage on a particular storage system
+provisioner: csi-driver.example-vendor.example
+parameters:
+# newer version of ssd
+  type: gp3
+
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer

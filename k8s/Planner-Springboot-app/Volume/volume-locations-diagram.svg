@@ -1,0 +1,103 @@
+<svg viewBox="0 0 980 760" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="490" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Where Volume Types Live in Kubernetes</text>
+
+  <!-- Cluster boundary -->
+  <rect x="30" y="60" width="920" height="670" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="50" y="86" font-size="15" font-weight="700" fill="#475569">KUBERNETES CLUSTER</text>
+
+  <!-- Node boundary -->
+  <rect x="55" y="105" width="590" height="600" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="75" y="130" font-size="14" font-weight="700" fill="#4338ca">NODE (worker machine)</text>
+
+  <!-- Node filesystem box (hostPath lives here) -->
+  <rect x="75" y="145" width="260" height="120" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="90" y="168" font-size="13" font-weight="700" fill="#92400e">NODE'S LOCAL FILESYSTEM</text>
+  <text x="90" y="188" font-size="11" fill="#78350f">e.g. /data/mysql</text>
+  <rect x="90" y="198" width="230" height="50" rx="6" fill="#fde68a" stroke="#d97706" stroke-width="1.5"/>
+  <text x="205" y="221" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">hostPath</text>
+  <text x="205" y="238" text-anchor="middle" font-size="10.5" fill="#78350f">tied to THIS node only</text>
+
+  <!-- Pod boundary -->
+  <rect x="75" y="285" width="550" height="400" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="95" y="310" font-size="14" font-weight="700" fill="#15803d">POD</text>
+
+  <!-- emptyDir box inside pod, outside containers -->
+  <rect x="95" y="325" width="200" height="80" rx="10" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+  <text x="195" y="352" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">emptyDir</text>
+  <text x="195" y="370" text-anchor="middle" font-size="10.5" fill="#14532d">created with pod,</text>
+  <text x="195" y="384" text-anchor="middle" font-size="10.5" fill="#14532d">deleted with pod</text>
+
+  <!-- volumes: field note -->
+  <rect x="310" y="325" width="290" height="80" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="455" y="350" text-anchor="middle" font-size="12" font-weight="700" fill="#166534">pod.spec.volumes: []</text>
+  <text x="455" y="368" text-anchor="middle" font-size="10.5" fill="#166534">declares which storage</text>
+  <text x="455" y="382" text-anchor="middle" font-size="10.5" fill="#166534">source(s) this pod can use</text>
+
+  <!-- Containers inside pod -->
+  <rect x="95" y="425" width="240" height="130" rx="10" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="215" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#0f766e">CONTAINER 1</text>
+  <text x="215" y="468" text-anchor="middle" font-size="10.5" fill="#134e4a">mysql-pod-container</text>
+  <rect x="115" y="480" width="200" height="55" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="215" y="502" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">volumeMounts:</text>
+  <text x="215" y="518" text-anchor="middle" font-size="10" fill="#134e4a">/var/lib/mysql</text>
+
+  <rect x="365" y="425" width="235" height="130" rx="10" fill="#ffffff" stroke="#0f766e" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="482" y="450" text-anchor="middle" font-size="13" font-weight="700" fill="#0f766e">CONTAINER 2</text>
+  <text x="482" y="468" text-anchor="middle" font-size="10.5" fill="#134e4a">(optional sidecar)</text>
+  <text x="482" y="490" text-anchor="middle" font-size="10.5" fill="#134e4a">can share the SAME</text>
+  <text x="482" y="505" text-anchor="middle" font-size="10.5" fill="#134e4a">emptyDir as Container 1</text>
+
+  <!-- PVC box inside pod (references, doesn't contain data) -->
+  <rect x="95" y="590" width="510" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="350" y="615" text-anchor="middle" font-size="13" font-weight="700" fill="#5b21b6">PVC (PersistentVolumeClaim)</text>
+  <text x="350" y="633" text-anchor="middle" font-size="10.5" fill="#4c1d95">a "request ticket" referenced in pod.spec.volumes — lives in the pod's namespace, points elsewhere for actual storage</text>
+
+  <!-- Arrow: container volumeMount -> emptyDir -->
+  <path d="M115,480 L195,405" stroke="#16a34a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: pod volumes field -> hostPath -->
+  <path d="M310,325 Q310,270 335,215" stroke="#d97706" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: container -> PVC -->
+  <path d="M215,555 L215,590" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Cluster-level box: PV (outside the node, cluster-scoped) -->
+  <rect x="675" y="285" width="255" height="400" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="800" y="310" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">CLUSTER-SCOPED</text>
+  <text x="800" y="328" text-anchor="middle" font-size="11" fill="#991b1b">(not bound to any one node)</text>
+
+  <rect x="700" y="345" width="205" height="110" rx="10" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+  <text x="802" y="370" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">PV (PersistentVolume)</text>
+  <text x="802" y="390" text-anchor="middle" font-size="10.5" fill="#7f1d1d">the actual storage resource</text>
+  <text x="802" y="404" text-anchor="middle" font-size="10.5" fill="#7f1d1d">(cloud disk, NFS, or</text>
+  <text x="802" y="418" text-anchor="middle" font-size="10.5" fill="#7f1d1d">node hostPath under the hood)</text>
+  <text x="802" y="438" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">reclaimPolicy: Retain / Delete</text>
+
+  <!-- Real disk box -->
+  <rect x="700" y="480" width="205" height="90" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="802" y="510" text-anchor="middle" font-size="12" font-weight="700" fill="#7f1d1d">Real physical storage</text>
+  <text x="802" y="528" text-anchor="middle" font-size="10" fill="#7f1d1d">AWS EBS / GCP PD /</text>
+  <text x="802" y="542" text-anchor="middle" font-size="10" fill="#7f1d1d">NFS share / local disk</text>
+
+  <!-- Arrow PV -> disk -->
+  <path d="M802,455 L802,480" stroke="#dc2626" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Arrow PVC -> PV (the binding, crossing pod/node boundary) -->
+  <path d="M605,615 C 660,615 660,400 700,400" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="655" y="600" font-size="10.5" font-weight="700" fill="#5b21b6">binds to</text>
+
+  <!-- Legend -->
+  <rect x="675" y="690" width="255" height="0" fill="none"/>
+  <text x="800" y="705" text-anchor="middle" font-size="11" fill="#64748b">PVC and PV can exist across node boundaries —</text>
+  <text x="800" y="720" text-anchor="middle" font-size="11" fill="#64748b">that's why pods can be rescheduled safely.</text>
+
+</svg>

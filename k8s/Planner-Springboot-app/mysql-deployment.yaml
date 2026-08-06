@@ -28,13 +28,25 @@ spec:
         # We are setting the env varibales as we have done in docker-compose file
         env:
           - name: MYSQL_ROOT_PASSWORD
-            value: root
+            valueFrom: 
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_ROOT_PASSWORD
           - name: MYSQL_DATABASE
-            value: planner_db   
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_DATABASE   
           - name: MYSQL_USER
-            value: username
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_USER
           - name: MYSQL_PASSWORD  
-            value: pwd
+            valueFrom:
+              secretKeyRef:
+                name: planner-secret
+                key: MYSQL_PASSWORD
         resources:
           requests:
             memory: "250Mi"
