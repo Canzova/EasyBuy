@@ -1,0 +1,145 @@
+<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="900" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="500" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">PV / PVC Access Modes</text>
+  <text x="500" y="58" text-anchor="middle" font-size="13" fill="#64748b">Who is allowed to mount the volume, and how (read-only vs read-write)</text>
+
+  <!-- shared disk icon function via reuse: draw disk symbol -->
+  <!-- ============ ROW 1: ReadWriteOnce (RWO) ============ -->
+  <rect x="30" y="85" width="940" height="180" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="55" y="112" font-size="16" font-weight="700" fill="#1d4ed8">ReadWriteOnce (RWO)</text>
+  <text x="55" y="132" font-size="12" fill="#1e3a8a">One NODE can mount it read-write. Pods on that SAME node can share it; pods on other nodes cannot use it at all.</text>
+
+  <!-- disk -->
+  <ellipse cx="140" cy="205" rx="45" ry="18" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+  <rect x="95" y="205" width="90" height="30" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+  <ellipse cx="140" cy="235" rx="45" ry="18" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="140" y="212" text-anchor="middle" font-size="10" font-weight="700" fill="#1e3a8a">PV</text>
+
+  <!-- Node A: allowed -->
+  <rect x="270" y="155" width="220" height="95" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="380" y="175" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">NODE A</text>
+  <rect x="285" y="185" width="90" height="50" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="330" y="207" text-anchor="middle" font-size="10" fill="#1e3a8a">Pod 1</text>
+  <text x="330" y="221" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <rect x="385" y="185" width="90" height="50" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="430" y="207" text-anchor="middle" font-size="10" fill="#1e3a8a">Pod 2</text>
+  <text x="430" y="221" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <path d="M185,220 L270,200" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <!-- Node B: blocked -->
+  <rect x="560" y="155" width="220" height="95" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="670" y="175" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">NODE B</text>
+  <rect x="575" y="185" width="190" height="50" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="670" y="207" text-anchor="middle" font-size="10" fill="#7f1d1d">Pod 3</text>
+  <text x="670" y="221" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">✗ cannot mount (different node)</text>
+  <path d="M185,225 L560,225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3" fill="none"/>
+  <text x="530" y="215" font-size="16" fill="#dc2626">✗</text>
+
+  <!-- ============ ROW 2: ReadWriteOncePod (RWOP) ============ -->
+  <rect x="30" y="280" width="940" height="180" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="55" y="307" font-size="16" font-weight="700" fill="#5b21b6">ReadWriteOncePod (RWOP)</text>
+  <text x="55" y="327" font-size="12" fill="#4c1d95">Only ONE POD in the whole cluster can mount it read-write — stricter than RWO (which allows multiple pods on the same node).</text>
+
+  <ellipse cx="140" cy="400" rx="45" ry="18" fill="#c4b5fd" stroke="#5b21b6" stroke-width="2"/>
+  <rect x="95" y="400" width="90" height="30" fill="#c4b5fd" stroke="#5b21b6" stroke-width="2"/>
+  <ellipse cx="140" cy="430" rx="45" ry="18" fill="#ddd6fe" stroke="#5b21b6" stroke-width="2"/>
+  <text x="140" y="407" text-anchor="middle" font-size="10" font-weight="700" fill="#4c1d95">PV</text>
+
+  <rect x="270" y="350" width="220" height="95" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="380" y="370" text-anchor="middle" font-size="12" font-weight="700" fill="#4c1d95">NODE A</text>
+  <rect x="285" y="380" width="90" height="50" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="330" y="402" text-anchor="middle" font-size="10" fill="#4c1d95">Pod 1</text>
+  <text x="330" y="416" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <rect x="385" y="380" width="90" height="50" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="430" y="402" text-anchor="middle" font-size="10" fill="#7f1d1d">Pod 2</text>
+  <text x="430" y="416" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">✗ blocked too</text>
+  <path d="M185,415 L270,395" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <rect x="560" y="350" width="220" height="95" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="670" y="370" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">NODE B</text>
+  <rect x="575" y="380" width="190" height="50" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="670" y="402" text-anchor="middle" font-size="10" fill="#7f1d1d">Pod 3</text>
+  <text x="670" y="416" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">✗ cannot mount</text>
+
+  <text x="55" y="440" font-size="10.5" fill="#4c1d95">Use case: guarantee exactly one writer cluster-wide — e.g. avoiding two replicas of a StatefulSet pod both grabbing the same volume during a rollout.</text>
+
+  <!-- ============ ROW 3: ReadOnlyMany (ROX) ============ -->
+  <rect x="30" y="475" width="940" height="150" rx="14" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+  <text x="55" y="502" font-size="16" font-weight="700" fill="#854d0e">ReadOnlyMany (ROX)</text>
+  <text x="55" y="522" font-size="12" fill="#713f12">MANY nodes can mount it at once, but only for READING — no node can write to it.</text>
+
+  <ellipse cx="140" cy="590" rx="45" ry="18" fill="#fde047" stroke="#a16207" stroke-width="2"/>
+  <rect x="95" y="590" width="90" height="25" fill="#fde047" stroke="#a16207" stroke-width="2"/>
+  <ellipse cx="140" cy="615" rx="45" ry="18" fill="#fef08a" stroke="#a16207" stroke-width="2"/>
+  <text x="140" y="597" text-anchor="middle" font-size="10" font-weight="700" fill="#713f12">PV</text>
+
+  <rect x="270" y="555" width="150" height="80" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+  <text x="345" y="573" text-anchor="middle" font-size="11" font-weight="700" fill="#713f12">NODE A</text>
+  <rect x="285" y="582" width="120" height="42" rx="6" fill="#ffffff" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="345" y="601" text-anchor="middle" font-size="10" fill="#713f12">Pod 1</text>
+  <text x="345" y="614" text-anchor="middle" font-size="9" fill="#16a34a">read-only ✓</text>
+  <path d="M185,600 L270,595" stroke="#ca8a04" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <rect x="440" y="555" width="150" height="80" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+  <text x="515" y="573" text-anchor="middle" font-size="11" font-weight="700" fill="#713f12">NODE B</text>
+  <rect x="455" y="582" width="120" height="42" rx="6" fill="#ffffff" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="515" y="601" text-anchor="middle" font-size="10" fill="#713f12">Pod 2</text>
+  <text x="515" y="614" text-anchor="middle" font-size="9" fill="#16a34a">read-only ✓</text>
+  <path d="M185,605 L440,595" stroke="#ca8a04" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <rect x="610" y="555" width="150" height="80" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+  <text x="685" y="573" text-anchor="middle" font-size="11" font-weight="700" fill="#713f12">NODE C</text>
+  <rect x="625" y="582" width="120" height="42" rx="6" fill="#ffffff" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="685" y="601" text-anchor="middle" font-size="10" fill="#713f12">Pod 3</text>
+  <text x="685" y="614" text-anchor="middle" font-size="9" fill="#16a34a">read-only ✓</text>
+  <path d="M185,610 L610,595" stroke="#ca8a04" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <text x="800" y="600" font-size="10.5" fill="#713f12" text-anchor="middle">e.g. shared</text>
+  <text x="800" y="613" font-size="10.5" fill="#713f12" text-anchor="middle">config/reference data</text>
+
+  <!-- ============ ROW 4: ReadWriteMany (RWX) ============ -->
+  <rect x="30" y="645" width="940" height="150" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="55" y="672" font-size="16" font-weight="700" fill="#166534">ReadWriteMany (RWX)</text>
+  <text x="55" y="692" font-size="12" fill="#14532d">MANY nodes can mount it at once, ALL with read-write access simultaneously (needs a backend that supports concurrent writers, e.g. NFS).</text>
+
+  <ellipse cx="140" cy="760" rx="45" ry="18" fill="#86efac" stroke="#15803d" stroke-width="2"/>
+  <rect x="95" y="760" width="90" height="25" fill="#86efac" stroke="#15803d" stroke-width="2"/>
+  <ellipse cx="140" cy="785" rx="45" ry="18" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>
+  <text x="140" y="767" text-anchor="middle" font-size="10" font-weight="700" fill="#14532d">PV</text>
+
+  <rect x="270" y="725" width="150" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="345" y="743" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">NODE A</text>
+  <rect x="285" y="752" width="120" height="42" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="345" y="771" text-anchor="middle" font-size="10" fill="#14532d">Pod 1</text>
+  <text x="345" y="784" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <path d="M185,770 L270,765" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <rect x="440" y="725" width="150" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="515" y="743" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">NODE B</text>
+  <rect x="455" y="752" width="120" height="42" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="515" y="771" text-anchor="middle" font-size="10" fill="#14532d">Pod 2</text>
+  <text x="515" y="784" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <path d="M185,775 L440,765" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <rect x="610" y="725" width="150" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="685" y="743" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">NODE C</text>
+  <rect x="625" y="752" width="120" height="42" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="685" y="771" text-anchor="middle" font-size="10" fill="#14532d">Pod 3</text>
+  <text x="685" y="784" text-anchor="middle" font-size="9" fill="#16a34a">read-write ✓</text>
+  <path d="M185,780 L610,765" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <text x="800" y="770" font-size="10.5" fill="#14532d" text-anchor="middle">e.g. shared</text>
+  <text x="800" y="783" font-size="10.5" fill="#14532d" text-anchor="middle">file uploads (NFS)</text>
+
+  <!-- Footer note -->
+  <text x="500" y="825" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Why bother? hostPath / most cloud disks (EBS, GCP PD) only support RWO —</text>
+  <text x="500" y="843" text-anchor="middle" font-size="12" fill="#334155">which is exactly why a single-node bottleneck like MySQL works fine, but scaling to multiple writers needs RWX-capable storage (NFS, EFS, etc).</text>
+</svg>
