@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: planner-deployment
+  labels: 
+    app: planner-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: planner-label-app-name
+  template:
+    metadata:
+      name: planner-pod
+      labels:
+        app: planner-label-app-name
+    spec:
+      containers:
+      - name: planner-pod-container
+        image: canzova/planner:1.2
+        ports:
+          - containerPort: 8080
+        # We also need to pass ENV vars so that our planner app can use it in .properties or .yml file to connect with MYSQL
+        env:
+          - name: DB_HOST
+            # value: mysql-service # Host name shoudl be same as service/pod name in docker-compose and here also 
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: DB_HOST
+
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: DB_PORT
+
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: DB_NAME
+          - name: DB_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: DB_USERNAME
+
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: planner-secret
+                key: DB_PASSWORD
+
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: 100m
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: planner-service
+  labels:
+    app: planner-service-lable-app
+spec:
+  selector:
+    app: planner-label-app-name
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8080
+  type: ClusterIP

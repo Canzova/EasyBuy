@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-stateful
+  labels: 
+    app: mysql-app
+spec:
+  serviceName: mysql-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql-label-app-name
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        app: mysql-label-app-name
+    spec:
+      containers:
+      - name: mysql-pod-container
+        image: mysql:8.4
+        ports:
+          - containerPort: 3306
+        # We are setting the env varibales as we have done in docker-compose file
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_ROOT_PASSWORD
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_DATABASE   
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: planner-config-map
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD  
+            valueFrom:
+              secretKeyRef:
+                name: planner-secret
+                key: MYSQL_PASSWORD
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: 512m
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        volumeMounts:
+          - name: mysql-storage-volume
+            mountPath: /var/lib/mysql # For the mysql container, the data which will be stored into this path ----> will not get stored into the volume directly
+# This will create one PVC for each pod
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-storage-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources: 
+          requests:
+            storage: 2Gi
+
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql-service-lable-app
+spec:
+  clusterIP: None
+  selector:
+    app: mysql-label-app-name
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  # type: ClusterIP

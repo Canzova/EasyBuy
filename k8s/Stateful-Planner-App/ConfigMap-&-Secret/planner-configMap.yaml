@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: planner-config-map
+data:
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "planner_db"   
+  MYSQL_USER: "username"
+  DB_HOST: "mysql-service" # Host name shoudl be same as service/pod name in docker-compose and here also 
+  DB_PORT: "3306"
+  DB_NAME: "planner_db"
+  DB_USERNAME: "username"
