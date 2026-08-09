@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "planner.mysqlStatefulSetName" . }}
+  labels:
+    app: mysql-app
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ .Values.mysql.service.name }}
+  replicas: {{ .Values.mysql.replicaCount }}
+  selector:
+    matchLabels:
+      app: mysql-label-app-name
+  template:
+    metadata:
+      labels:
+        app: mysql-label-app-name
+    spec:
+      containers:
+        - name: {{ .Values.mysql.container.name }}
+          image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
+          imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.mysql.container.port }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "planner.secretName" . }}
+                  key: MYSQL_PASSWORD
+          resources:
+            {{- toYaml .Values.mysql.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ .Values.mysql.persistence.volumeClaimTemplates.name }}
+              mountPath: /var/lib/mysql
+  {{- if .Values.mysql.persistence.volumeClaimTemplates.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.mysql.persistence.volumeClaimTemplates.name }}
+      spec:
+        accessModes:
+          {{- toYaml .Values.mysql.persistence.volumeClaimTemplates.accessModes | nindent 10 }}
+        {{- if .Values.mysql.persistence.volumeClaimTemplates.storageClassName }}
+        storageClassName: {{ .Values.mysql.persistence.volumeClaimTemplates.storageClassName | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.mysql.persistence.volumeClaimTemplates.size }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mysql.service.name }}
+  labels:
+    app: mysql-service-lable-app
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  selector:
+    app: mysql-label-app-name
+  ports:
+    - protocol: TCP
+      port: {{ .Values.mysql.service.port }}
+      targetPort: {{ .Values.mysql.container.port }}

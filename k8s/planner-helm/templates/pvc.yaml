@@ -1,0 +1,18 @@
+{{- if .Values.mysql.persistence.staticPvc.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.mysql.persistence.staticPvc.name }}
+  labels:
+    app: mysql-pvc-lable
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- toYaml .Values.mysql.persistence.staticPvc.accessModes | nindent 4 }}
+  {{- if .Values.mysql.persistence.staticPvc.storageClassName }}
+  storageClassName: {{ .Values.mysql.persistence.staticPvc.storageClassName | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.persistence.staticPvc.size }}
+{{- end }}

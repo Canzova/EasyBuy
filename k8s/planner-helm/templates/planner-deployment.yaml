@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.planner.service.name | default (printf "%s-deployment" (include "planner.fullname" .)) }}
+  labels:
+    app: planner-app
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.planner.replicaCount }}
+  selector:
+    matchLabels:
+      app: planner-label-app-name
+  template:
+    metadata:
+      labels:
+        app: planner-label-app-name
+    spec:
+      containers:
+        - name: {{ .Values.planner.container.name }}
+          image: "{{ .Values.planner.image.repository }}:{{ .Values.planner.image.tag }}"
+          imagePullPolicy: {{ .Values.planner.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.planner.container.port }}
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: DB_NAME
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "planner.configMapName" . }}
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "planner.secretName" . }}
+                  key: DB_PASSWORD
+          resources:
+            {{- toYaml .Values.planner.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.planner.service.name }}
+  labels:
+    app: planner-service-lable-app
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: planner-label-app-name
+  ports:
+    - protocol: TCP
+      port: {{ .Values.planner.service.port }}
+      targetPort: {{ .Values.planner.service.targetPort }}
+  type: {{ .Values.planner.service.type }}

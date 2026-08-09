@@ -1,0 +1,16 @@
+{{- if .Values.mysql.persistence.pv.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.mysql.persistence.pv.name }}
+  labels:
+    {{- include "planner.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ .Values.mysql.persistence.pv.capacity }}
+  accessModes:
+    {{- toYaml .Values.mysql.persistence.pv.accessModes | nindent 4 }}
+  persistentVolumeReclaimPolicy: {{ .Values.mysql.persistence.pv.reclaimPolicy }}
+  hostPath:
+    path: {{ .Values.mysql.persistence.pv.hostPath }}
+{{- end }}

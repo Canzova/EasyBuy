@@ -1,0 +1,38 @@
+<svg width="680" height="300" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>How Helm renders a chart into a release</title>
+<desc>Shows a Helm chart made of template files and a values.yaml file being combined by the Helm engine to produce final Kubernetes manifests, which are applied to the cluster as a named release.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<style>
+text { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; }
+.th { font-size: 14px; font-weight: 600; }
+.ts { font-size: 12px; }
+</style>
+
+<rect x="40" y="30" width="200" height="56" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="140" y="50" text-anchor="middle" fill="#26215C">Chart templates/</text>
+<text class="ts" x="140" y="70" text-anchor="middle" fill="#3C3489">templated YAML with {{ }}</text>
+
+<rect x="440" y="30" width="200" height="56" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="540" y="50" text-anchor="middle" fill="#26215C">values.yaml</text>
+<text class="ts" x="540" y="70" text-anchor="middle" fill="#3C3489">config values to fill in</text>
+
+<path d="M140 86L140 120L340 120" fill="none" stroke="#7F77DD" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M540 86L540 120L340 120" fill="none" stroke="#7F77DD" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="220" y="120" width="240" height="50" rx="10" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+<text class="th" x="340" y="140" text-anchor="middle" fill="#4A1B0C">Helm engine</text>
+<text class="ts" x="340" y="158" text-anchor="middle" fill="#712B13">merges templates + values</text>
+
+<line x1="340" y1="170" x2="340" y2="200" stroke="#993C1D" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="190" y="200" width="300" height="50" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="340" y="220" text-anchor="middle" fill="#04342C">Final Kubernetes manifests</text>
+<text class="ts" x="340" y="238" text-anchor="middle" fill="#085041">plain Deployment, Service, Ingress YAML</text>
+
+<line x1="340" y1="250" x2="340" y2="270" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+<text class="ts" x="340" y="290" text-anchor="middle" fill="#444441">applied to cluster as a named "release"</text>
+</svg>
