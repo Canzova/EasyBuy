@@ -1,0 +1,20 @@
+1. Check the deployed resources:
+
+   kubectl get pods
+   kubectl get svc
+   kubectl get statefulset
+   kubectl get pvc
+   kubectl get pv
+   kubectl get ingress
+   kubectl get hpa
+
+2. The planner application is exposed through the Ingress configured with:
+
+   Host: {{ .Values.ingress.host }}
+   Path: {{ .Values.ingress.path }}
+
+3. IMPORTANT:
+   The supplied manifests define a 3-replica MySQL StatefulSet with
+   volumeClaimTemplates and also define one separate static PV/PVC.
+   A single 2Gi static PV cannot satisfy three StatefulSet PVCs.
+   Review storage configuration before using this chart with 3 MySQL replicas.

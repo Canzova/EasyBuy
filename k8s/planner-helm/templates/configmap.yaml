@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "planner.configMapName" . }}
+  labels:
+    {{- include "planner.labels" . | nindent 4 }}
+data:
+  MYSQL_ROOT_PASSWORD: {{ .Values.config.mysqlRootPassword | quote }}
+  MYSQL_DATABASE: {{ .Values.config.mysqlDatabase | quote }}
+  MYSQL_USER: {{ .Values.config.mysqlUser | quote }}
+  DB_HOST: {{ default (include "planner.mysqlServiceName" .) .Values.config.dbHost | quote }}
+  DB_PORT: {{ .Values.config.dbPort | quote }}
+  DB_NAME: {{ .Values.config.dbName | quote }}
+  DB_USERNAME: {{ .Values.config.dbUsername | quote }}
