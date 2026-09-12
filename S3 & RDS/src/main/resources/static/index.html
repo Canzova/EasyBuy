@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html"><i class="fa-solid fa-images"></i> View Images</a></li>
+        <li><a href="profile.html"><i class="fa-solid fa-circle-user"></i> Profile</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Welcome to <span class="gradient-text">S3 Manager</span></h1>
+            <p>Manage your AWS S3 uploads, users, and multipart transfers — all in one place.</p>
+            <div class="hero-actions">
+                <a href="create-user.html" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Create User</a>
+                <a href="multipart.html" class="btn btn-outline"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="orbit-ring">
+                <div class="orbit-icon" style="--i:0"><i class="fa-brands fa-aws"></i></div>
+                <div class="orbit-icon" style="--i:1"><i class="fa-solid fa-database"></i></div>
+                <div class="orbit-icon" style="--i:2"><i class="fa-solid fa-cloud"></i></div>
+                <div class="orbit-icon" style="--i:3"><i class="fa-solid fa-lock"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cards-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="cards-grid">
+            <a href="create-user.html" class="card">
+                <div class="card-icon purple"><i class="fa-solid fa-user-plus"></i></div>
+                <h3>Create User</h3>
+                <p>Register a new user with profile picture uploaded directly to S3.</p>
+                <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="upload.html" class="card">
+                <div class="card-icon blue"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <h3>Upload File</h3>
+                <p>Upload images or videos to S3 for an existing user.</p>
+                <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="multipart.html" class="card">
+                <div class="card-icon green"><i class="fa-solid fa-layer-group"></i></div>
+                <h3>Multipart Upload</h3>
+                <p>Upload large files in parts using S3 presigned multipart upload.</p>
+                <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="images.html" class="card">
+                <div class="card-icon orange"><i class="fa-solid fa-images"></i></div>
+                <h3>View Images</h3>
+                <p>Retrieve presigned URLs and preview your S3 stored images.</p>
+                <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </section>
+
+    <section class="rds-banner">
+        <div class="rds-banner-inner">
+            <div class="rds-pulse"></div>
+            <i class="fa-solid fa-database"></i>
+            <div class="rds-banner-text">
+                <strong>Live RDS Sync</strong>
+                <span>Every user and upload is persisted in real-time to AWS RDS MySQL</span>
+            </div>
+            <div class="rds-badges">
+                <span class="rds-badge"><i class="fa-brands fa-aws"></i> RDS MySQL</span>
+                <span class="rds-badge"><i class="fa-solid fa-bolt"></i> Real-time</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stat-card">
+            <i class="fa-solid fa-users"></i>
+            <div>
+                <span class="stat-num" id="stat-users">—</span>
+                <span class="stat-label">Users</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-file"></i>
+            <div>
+                <span class="stat-num" id="stat-uploads">—</span>
+                <span class="stat-label">Uploads</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-server"></i>
+            <div>
+                <span class="stat-num">S3</span>
+                <span class="stat-label">AWS Bucket</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-circle-check" style="color:#22c55e"></i>
+            <div>
+                <span class="stat-num" id="stat-status">Live</span>
+                <span class="stat-label">Backend Status</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | Create User</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html" class="active"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html"><i class="fa-solid fa-images"></i> View Images</a></li>
+        <li><a href="profile.html"><i class="fa-solid fa-circle-user"></i> Profile</a></li>
+    </ul>
+</nav>
+
+<main class="main-content page-center">
+    <div class="form-card">
+        <div class="form-card-header">
+            <div class="form-icon purple"><i class="fa-solid fa-user-plus"></i></div>
+            <h2>Create New User</h2>
+            <p>Register a user and upload their profile picture to S3</p>
+        </div>
+
+        <form id="createUserForm" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username"><i class="fa-solid fa-at"></i> Username</label>
+                    <input type="text" id="username" name="username" placeholder="e.g. john_doe" required minlength="3" maxlength="20"/>
+                    <span class="field-error" id="err-username"></span>
+                </div>
+                <div class="form-group">
+                    <label for="name"><i class="fa-solid fa-id-card"></i> Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. John Doe" required/>
+                    <span class="field-error" id="err-name"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="bio"><i class="fa-solid fa-pen-to-square"></i> Bio</label>
+                <textarea id="bio" name="bio" placeholder="Tell us about yourself..." maxlength="5000" rows="3"></textarea>
+                <span class="char-count" id="bio-count">0 / 5000</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                <div class="input-icon-wrap">
+                    <input type="password" id="password" name="password" placeholder="Min 6 characters" required minlength="6"/>
+                    <button type="button" class="toggle-pass" onclick="togglePassword()"><i class="fa-solid fa-eye" id="eye-icon"></i></button>
+                </div>
+                <span class="field-error" id="err-password"></span>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-image"></i> Profile Picture</label>
+                <div class="drop-zone" id="dropZone">
+                    <input type="file" id="images" name="images" accept="image/*" class="drop-input"/>
+                    <div class="drop-content" id="dropContent">
+                        <i class="fa-solid fa-cloud-arrow-up fa-2x"></i>
+                        <p>Drag & drop or <span>browse</span></p>
+                        <small>JPEG, PNG, GIF, WEBP</small>
+                    </div>
+                </div>
+                <div id="previewWrap" class="preview-wrap hidden">
+                    <img id="imagePreview" class="image-preview" alt="preview"/>
+                    <button type="button" class="preview-remove" id="removePreview"><i class="fa-solid fa-xmark"></i> Remove</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                <i class="fa-solid fa-user-plus" id="submitIcon"></i>
+                <span id="submitText">Create User</span>
+            </button>
+        </form>
+    </div>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/create-user.js"></script>
+</body>
+</html>

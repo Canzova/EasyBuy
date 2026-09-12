@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | User Profile</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html"><i class="fa-solid fa-images"></i> View Images</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+
+    <div class="profile-wrapper hidden" id="profileWrapper">
+        <!-- Profile Card -->
+        <div class="profile-card" id="profileCard">
+            <div class="profile-banner"></div>
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar" id="profileAvatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2 id="profileName">—</h2>
+                <p class="profile-username" id="profileUsername">@—</p>
+                <p class="profile-bio" id="profileBio"></p>
+                <div class="profile-meta">
+                    <span><i class="fa-solid fa-id-badge"></i> ID: <strong id="profileId">—</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Object Key Card -->
+        <div class="object-key-card" id="objectKeyCard">
+            <div class="object-key-label">
+                <i class="fa-solid fa-key"></i> S3 Object Key
+            </div>
+            <div class="object-key-value">
+                <code id="profileKey">—</code>
+                <button class="copy-btn" id="copyKeyBtn" title="Copy object key">
+                    <i class="fa-solid fa-copy"></i> Copy
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Picture Preview -->
+        <div class="profile-image-section hidden" id="profileImageSection">
+            <h3 class="section-title"><i class="fa-solid fa-image"></i> Profile Picture</h3>
+            <div class="profile-image-card">
+                <img id="profileImageFull" src="" alt="Profile Picture"/>
+                <div class="profile-image-actions">
+                    <a id="profileImageLink" href="#" target="_blank" class="btn btn-outline btn-sm hidden">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> View Image
+                    </a>
+                    <button class="btn btn-outline btn-sm" id="copyUrlBtn">
+                        <i class="fa-solid fa-copy"></i> Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No data state -->
+    <div class="empty-state hidden" id="emptyState">
+        <i class="fa-solid fa-user-slash fa-3x"></i>
+        <h3>No Profile Data</h3>
+        <p>Create a user first to see their profile here.</p>
+        <a href="create-user.html" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Create User</a>
+    </div>
+
+</main>
+
+<div id="lightbox" class="lightbox hidden">
+    <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightbox-img" src="" alt="preview"/>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/profile.js"></script>
+</body>
+</html>

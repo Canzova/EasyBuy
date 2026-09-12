@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | View Images</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html" class="active"><i class="fa-solid fa-images"></i> View Images</a></li>
+        <li><a href="profile.html"><i class="fa-solid fa-circle-user"></i> Profile</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+    <div class="page-header">
+        <div class="form-icon orange"><i class="fa-solid fa-images"></i></div>
+        <div>
+            <h2>View Images</h2>
+            <p>Retrieve presigned S3 URLs and preview your stored images</p>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <div class="form-group">
+            <label><i class="fa-solid fa-key"></i> Object Keys</label>
+            <p class="hint">Enter one S3 object key per line (e.g. <code>john_doe/photo.jpg</code>)</p>
+            <textarea id="objectKeys" rows="5" placeholder="john_doe/photo.jpg&#10;jane/avatar.png"></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="fetchImages()">
+            <i class="fa-solid fa-magnifying-glass"></i> Fetch Presigned URLs
+        </button>
+    </div>
+
+    <div class="hidden" id="gallery-section">
+        <h3 class="section-title" style="margin-top:2rem">Results</h3>
+        <div class="image-gallery" id="image-gallery"></div>
+    </div>
+
+    <div class="hidden" id="url-list-section">
+        <h3 class="section-title" style="margin-top:2rem">Presigned URLs</h3>
+        <ul class="url-list" id="url-list"></ul>
+    </div>
+</main>
+
+<div id="lightbox" class="lightbox hidden">
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightbox-img" src="" alt="preview"/>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/images.js"></script>
+</body>
+</html>

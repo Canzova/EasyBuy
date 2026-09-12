@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | Upload File</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html" class="active"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html"><i class="fa-solid fa-images"></i> View Images</a></li>
+        <li><a href="profile.html"><i class="fa-solid fa-circle-user"></i> Profile</a></li>
+    </ul>
+</nav>
+
+<main class="main-content page-center">
+    <div class="form-card">
+        <div class="form-card-header">
+            <div class="form-icon blue"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h2>Upload File</h2>
+            <p>Upload images or videos to S3 for an existing user</p>
+        </div>
+
+        <form id="uploadForm" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-at"></i> Username</label>
+                    <input type="text" id="up-username" placeholder="e.g. john_doe" required/>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-id-card"></i> Full Name</label>
+                    <input type="text" id="up-name" placeholder="e.g. John Doe" required/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="up-password" placeholder="Min 6 characters" required/>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-toggle-on"></i> Profile Picture?</label>
+                    <div class="toggle-wrap">
+                        <label class="toggle">
+                            <input type="checkbox" id="up-isProfile"/>
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span id="toggle-label">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-photo-film"></i> Select File(s)</label>
+                <div class="drop-zone" id="upDropZone">
+                    <input type="file" id="up-files" name="images" accept="image/*,video/*" multiple class="drop-input"/>
+                    <div class="drop-content" id="upDropContent">
+                        <i class="fa-solid fa-cloud-arrow-up fa-2x"></i>
+                        <p>Drag & drop or <span>browse</span></p>
+                        <small>Images & Videos supported</small>
+                    </div>
+                </div>
+                <div class="file-chips" id="file-chips"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="upSubmitBtn">
+                <i class="fa-solid fa-cloud-arrow-up" id="upSubmitIcon"></i>
+                <span id="upSubmitText"> Upload</span>
+            </button>
+        </form>
+    </div>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/upload.js"></script>
+</body>
+</html>

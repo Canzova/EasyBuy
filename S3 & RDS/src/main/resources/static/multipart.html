@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>S3 Manager | Multipart Upload</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand"><i class="fa-brands fa-aws"></i> S3 Manager</div>
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="create-user.html"><i class="fa-solid fa-user-plus"></i> Create User</a></li>
+        <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</a></li>
+        <li><a href="multipart.html" class="active"><i class="fa-solid fa-layer-group"></i> Multipart Upload</a></li>
+        <li><a href="images.html"><i class="fa-solid fa-images"></i> View Images</a></li>
+        <li><a href="profile.html"><i class="fa-solid fa-circle-user"></i> Profile</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+    <div class="page-header">
+        <div class="form-icon green"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+            <h2>Multipart Upload</h2>
+            <p>Upload large files to S3 automatically in parts</p>
+        </div>
+    </div>
+
+    <!-- Upload Form -->
+    <div class="mp-panel" id="panel-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label><i class="fa-solid fa-at"></i> Username</label>
+                <input type="text" id="mp-userName" placeholder="e.g. john_doe"/>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-gear"></i> Part Size</label>
+                <select id="mp-partSize">
+                    <option value="5242880">5 MB</option>
+                    <option value="10485760" selected>10 MB</option>
+                    <option value="20971520">20 MB</option>
+                    <option value="52428800">50 MB</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-file-arrow-up"></i> Select File</label>
+            <div class="drop-zone" id="mpDropZone">
+                <input type="file" id="mp-file" class="drop-input"/>
+                <div class="drop-content" id="mpDropContent">
+                    <i class="fa-solid fa-cloud-arrow-up fa-2x"></i>
+                    <p>Drag & drop or <span>browse</span></p>
+                    <small>Any file type supported</small>
+                </div>
+            </div>
+            <!-- File info shown after selection -->
+            <div class="file-info-bar hidden" id="fileInfoBar">
+                <i class="fa-solid fa-file fa-lg" style="color:var(--primary)"></i>
+                <div class="file-info-details">
+                    <span id="fileInfoName"></span>
+                    <small id="fileInfoMeta"></small>
+                </div>
+                <button class="remove-file-btn" id="removeFileBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <div class="mp-actions">
+            <button class="btn btn-primary" id="startBtn">
+                <i class="fa-solid fa-rocket"></i> Start Upload
+            </button>
+            <button class="btn btn-danger hidden" id="cancelBtn">
+                <i class="fa-solid fa-ban"></i> Cancel Upload
+            </button>
+        </div>
+    </div>
+
+    <!-- Progress Panel — shown during upload -->
+    <div class="mp-panel hidden" id="panel-progress">
+
+        <!-- Overall progress -->
+        <div class="overall-progress">
+            <div class="overall-progress-header">
+                <span id="overallStatus"></span>
+                <span id="overallPct">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-meta">
+                <span id="progressPartsText"></span>
+                <span id="progressSizeText"></span>
+            </div>
+        </div>
+
+        <!-- Parts list -->
+        <div class="parts-list" id="parts-list">
+            <h4><i class="fa-solid fa-list-check"></i> Parts</h4>
+            <div id="parts-cards"></div>
+        </div>
+    </div>
+
+    <!-- Result Panel — shown after completion -->
+    <div class="mp-panel hidden" id="panel-result">
+        <div class="upload-result-header success-box" id="resultHeader">
+            <i class="fa-solid fa-circle-check fa-2x"></i>
+            <div>
+                <h3>Upload Complete!</h3>
+                <p>Your file has been successfully uploaded to S3.</p>
+            </div>
+        </div>
+        <div class="object-key-card" style="margin-top:1.25rem">
+            <div class="object-key-label"><i class="fa-solid fa-key"></i> S3 Object Key</div>
+            <div class="object-key-value">
+                <code id="result-key">—</code>
+                <button class="copy-btn" id="copyResultKey"><i class="fa-solid fa-copy"></i> Copy</button>
+            </div>
+        </div>
+        <div style="margin-top:1rem">
+            <button class="btn btn-primary" id="uploadAnotherBtn">
+                <i class="fa-solid fa-plus"></i> Upload Another File
+            </button>
+        </div>
+    </div>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="js/multipart.js"></script>
+</body>
+</html>
