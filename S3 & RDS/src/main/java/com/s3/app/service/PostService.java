@@ -10,5 +10,5 @@ import java.util.List;
 public interface PostService {
     void uploadPost(User user, List<MultipartFile> profilePicture, Boolean isProfilePic) throws IOException;
 
-    void getPresignedImage(PostEntity post);
+    String getS3ObjectPresignedKey(String postKey);
 }

@@ -15,6 +15,7 @@ import java.util.List;
 // Getters / Setters will be used by model mapper for mapping, also it will allow us to use these fields into other classes
 @Getter
 @Setter
+@Table(name = "user_table")
 public class User {
 
     @Id
@@ -32,6 +33,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "userId",  fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private List<PostEntity> posts = new ArrayList<>();
 }
