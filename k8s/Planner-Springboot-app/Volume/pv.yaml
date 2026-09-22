@@ -5,11 +5,11 @@ metadata:
 spec:
   capacity:
     storage: 2Gi
-    
+
   accessModes:
     - ReadWriteOnce
-  
+
   persistentVolumeReclaimPolicy: Retain
 
   hostPath:
-    path: /data/mysql # This is the folder path onto my node
+    path: /data/mysql # This is the folder path onto my node where the data will get stored

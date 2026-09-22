@@ -52,7 +52,37 @@ If you used a Deployment for these, pods would get new random names on every res
 
 ---
 
-## 5. How to Write One — Anatomy of a StatefulSet YAML
+## 5. What is a Headless Service?
+
+A normal Kubernetes Service gives you **one single IP** that load-balances traffic across all pods behind it. You talk to the Service IP, and Kubernetes picks a pod for you — you never know or care which one.
+
+A **Headless Service** is a Service with `clusterIP: None`. This tells Kubernetes: *don't give me a single shared IP, instead give each pod its own DNS entry.*
+
+```
+Normal Service:                        Headless Service:
+
+client → service-ip (10.0.0.5)        client → db-0.db  → pod-0 directly
+              ↓                                → db-1.db  → pod-1 directly
+         any pod                              → db-2.db  → pod-2 directly
+```
+
+Why does StatefulSet need this? Because with a database cluster, you often need to talk to a **specific pod** — not just any pod:
+- You need to write to `db-0` (the primary), not a random replica
+- A replica needs to replicate from `db-0` specifically, not from "whoever"
+- If pod names were random (like a Deployment), these stable addresses wouldn't exist
+
+With a headless Service named `db`, each pod automatically gets a stable DNS name:
+```
+db-0.db.default.svc.cluster.local
+db-1.db.default.svc.cluster.local
+db-2.db.default.svc.cluster.local
+```
+
+These names survive pod restarts — `db-0` always comes back as `db-0` at the same address.
+
+---
+
+## 6. How to Write One — Anatomy of a StatefulSet YAML
 
 You need **two objects**: a headless Service (for stable DNS) + the StatefulSet itself.
 
@@ -113,7 +143,7 @@ Resulting stable hostnames: `db-0.db.default.svc.cluster.local`, `db-1.db.defaul
 
 ---
 
-## 6. Relation to Databases — Primary & Replicas
+## 7. Relation to Databases — Primary & Replicas
 
 **Important:** Kubernetes/StatefulSet does **not** perform database replication itself. It only provides the stable identity + stable storage foundation. Replication is configured by the database engine on top of that foundation.
 
@@ -167,7 +197,7 @@ Managed services like AWS RDS solve the exact same problem but hide all the mach
 
 ---
 
-## 7. What Else You Should Use StatefulSet For (Beyond Databases)
+## 8. What Else You Should Use StatefulSet For (Beyond Databases)
 
 Any system where instances need a stable identity, ordered startup, and/or their own durable storage:
 
@@ -195,7 +225,7 @@ Any system where instances need a stable identity, ordered startup, and/or their
 
 ---
 
-## 8. Quick Reference Cheatsheet
+## 9. Quick Reference Cheatsheet
 
 - `kubectl get pods` → StatefulSet pods show ordered names: `db-0`, `db-1`, `db-2`
 - `kubectl get pvc` → one PVC per pod: `data-db-0`, `data-db-1`, `data-db-2`

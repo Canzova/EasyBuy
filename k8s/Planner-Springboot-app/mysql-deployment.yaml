@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
-  labels: 
+  labels:
     app: mysql-app
 spec:
   replicas: 1
@@ -17,48 +17,58 @@ spec:
     spec:
       # Creating a volume to store the data
       volumes:
-      - name: mysql-storage-volume
-        persistentVolumeClaim:
-          claimName: mysql-pvc # This is the PVC name inside metadata
+        - name: mysql-storage-volume
+          persistentVolumeClaim:
+            claimName: mysql-pvc # This is the PVC name inside metadata
       containers:
-      - name: mysql-pod-container
-        image: mysql:8.4
-        ports:
-          - containerPort: 3306
-        # We are setting the env varibales as we have done in docker-compose file
-        env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom: 
-              configMapKeyRef:
-                name: planner-config-map
-                key: MYSQL_ROOT_PASSWORD
-          - name: MYSQL_DATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: planner-config-map
-                key: MYSQL_DATABASE   
-          - name: MYSQL_USER
-            valueFrom:
-              configMapKeyRef:
-                name: planner-config-map
-                key: MYSQL_USER
-          - name: MYSQL_PASSWORD  
-            valueFrom:
-              secretKeyRef:
-                name: planner-secret
-                key: MYSQL_PASSWORD
-        resources:
-          requests:
-            memory: "250Mi"
-            cpu: 512m
-          limits:
-            memory: "1Gi"
-            cpu: "1"
-        volumeMounts:
-          - name: mysql-storage-volume
-            mountPath: /var/lib/mysql # For the mysql container, the data which will be stored into this path ----> will not get stored into the volume directly
+        - name: mysql-pod-container
+          image: mysql:8.4
+          ports:
+            - containerPort: 3306
+          # We are setting the env varibales as we have done in docker-compose file
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secret
+                  key: MYSQL_PASSWORD
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: 512m
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          volumeMounts:
+            - name: mysql-storage-volume
+              mountPath: /var/lib/mysql # mountPath: /var/lib/mysql means: "take the volume (mysql-storage-volume, which is backed by the PVC) and mount it AT this path inside the container."
 
---- 
+  # MySQL writes to /var/lib/mysql (inside container)
+  #      ↓
+  # volumeMount intercepts it
+  #        ↓
+  # Data goes into mysql-storage-volume (the volume)
+  #        ↓
+  # Volume is backed by mysql-pvc (PersistentVolumeClaim)
+  #        ↓
+  # PVC is backed by actual storage on the Node/Cloud
+
+---
 apiVersion: v1
 kind: Service
 metadata:

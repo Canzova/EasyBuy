@@ -444,3 +444,96 @@ kubectl delete -f pod.yaml
 ---
 
 As you continue learning, the next natural topics are **ReplicaSets**, **Deployments**, and **Services**. Those build directly on everything you've practiced here and are what you'll use in most real Kubernetes applications.
+
+---
+
+# Resources: Requests and Limits
+
+## What are they?
+
+When you define a container, you can tell Kubernetes how much CPU and memory it needs.
+
+```yaml
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: 100m
+  limits:
+    memory: "265Mi"
+    cpu: "500m"
+```
+
+---
+
+## requests
+
+`requests` is the **minimum** your container needs to be scheduled on a node.
+
+```text
+Kubernetes Scheduler looks for a node with:
+  - at least 128Mi memory free
+  - at least 100m CPU free
+
+Node has enough?        → Pod gets scheduled ✅
+Node doesn't have enough? → Try next node
+No node has enough?     → Pod stays Pending ❌
+```
+
+> You are not requesting from someone. You are telling Kubernetes the minimum resources needed to place your Pod.
+
+---
+
+## limits
+
+`limits` is the **maximum** your container is allowed to use at runtime.
+
+```text
+CPU over limit    → container gets throttled (slowed down)
+Memory over limit → container gets OOMKilled (killed and restarted)
+```
+
+---
+
+## CPU Units
+
+| Value | Meaning |
+|-------|----------|
+| `100m` | 0.1 of 1 CPU core |
+| `500m` | 0.5 of 1 CPU core |
+| `1000m` or `1` | 1 full CPU core |
+
+---
+
+## Memory Units
+
+| Value | Meaning |
+|-------|----------|
+| `128Mi` | 128 Mebibytes |
+| `256Mi` | 256 Mebibytes |
+| `1Gi` | 1 Gibibyte |
+
+---
+
+## requests vs limits summary
+
+| | requests | limits |
+|---|---|---|
+| Purpose | Scheduling (find a node) | Runtime enforcement |
+| CPU exceeded | — | Container throttled |
+| Memory exceeded | — | Container OOMKilled |
+
+---
+
+## Why set them?
+
+Without requests/limits:
+
+- A single container can consume all node resources
+- Other Pods on the same node get starved
+- Cluster becomes unstable
+
+With requests/limits:
+
+- Kubernetes schedules Pods efficiently
+- No single container can take down the node
+- Predictable and stable cluster behavior

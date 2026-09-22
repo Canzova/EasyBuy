@@ -556,3 +556,111 @@ kubectl delete deployment nginx-deployment
 * The **selector** and **Pod labels** must match so the Deployment knows which Pods it owns.
 * Features like **self-healing**, **scaling**, **rolling updates**, and **rollbacks** are the main reasons Deployments are preferred over creating Pods directly.
 * In production, you almost always create **Deployments**, not standalone Pods.
+
+---
+
+# Resources: Requests and Limits
+
+## What are they?
+
+Inside the Pod template of a Deployment, each container can declare how much CPU and memory it needs.
+
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: 100m
+      limits:
+        memory: "265Mi"
+        cpu: "500m"
+```
+
+---
+
+## requests
+
+`requests` is the **minimum** resources needed for the container to be scheduled on a node.
+
+```text
+Kubernetes Scheduler looks for a node with:
+  - at least 128Mi memory free
+  - at least 100m CPU free
+
+Node has enough?          → Pod gets scheduled ✅
+Node doesn't have enough? → Try next node
+No node has enough?       → Pod stays Pending ❌
+```
+
+> You are not requesting from someone. You are telling Kubernetes the minimum resources needed to place your Pod.
+
+In a Deployment with `replicas: 2`, each Pod independently needs to satisfy the requests.
+
+```text
+replicas: 2
+
+Pod 1 → needs 128Mi + 100m CPU → scheduled on Node A
+Pod 2 → needs 128Mi + 100m CPU → scheduled on Node B
+```
+
+---
+
+## limits
+
+`limits` is the **maximum** your container is allowed to use at runtime.
+
+```text
+CPU over limit    → container gets throttled (slowed down)
+Memory over limit → container gets OOMKilled (killed and restarted)
+```
+
+The Deployment will automatically restart OOMKilled Pods due to self-healing.
+
+---
+
+## CPU Units
+
+| Value | Meaning |
+|-------|----------|
+| `100m` | 0.1 of 1 CPU core |
+| `500m` | 0.5 of 1 CPU core |
+| `1000m` or `1` | 1 full CPU core |
+
+---
+
+## Memory Units
+
+| Value | Meaning |
+|-------|----------|
+| `128Mi` | 128 Mebibytes |
+| `256Mi` | 256 Mebibytes |
+| `1Gi` | 1 Gibibyte |
+
+---
+
+## requests vs limits summary
+
+| | requests | limits |
+|---|---|---|
+| Purpose | Scheduling (find a node) | Runtime enforcement |
+| CPU exceeded | — | Container throttled |
+| Memory exceeded | — | Container OOMKilled |
+
+---
+
+## Why set them in a Deployment?
+
+Without requests/limits:
+
+- Pods can land on already overloaded nodes
+- One container can starve all other Pods on the node
+- Cluster becomes unpredictable under load
+
+With requests/limits:
+
+- Scheduler places Pods on nodes that can actually handle them
+- No single container can take down the node
+- Stable and predictable behavior across all replicas

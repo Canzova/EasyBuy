@@ -88,7 +88,7 @@ spec:
       storage: 5Gi                    # desired size — provisioner creates a disk of this size
 ```
 
-### 1.7 Using It in a Pod (same as before)
+
 
 ```yaml
 apiVersion: v1
@@ -107,6 +107,33 @@ spec:
       persistentVolumeClaim:
         claimName: my-app-pvc          # points to the PVC, not the StorageClass directly
 ```
+
+### 1.7 Who Controls How Much a Developer Can Request?
+
+With **static provisioning**, the limit is natural — if no PV with enough capacity exists, the PVC stays `Pending`.
+
+With **dynamic provisioning (StorageClass)**, there's no automatic limit. A developer could request `100Gi` or `1Ti` and the provisioner would just create it. This is where `ResourceQuota` comes in.
+
+Admins apply a `ResourceQuota` per **namespace** to cap total storage usage for a team:
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: storage-quota
+  namespace: dev-team
+spec:
+  hard:
+    requests.storage: 50Gi        # total storage across ALL PVCs in this namespace
+    persistentvolumeclaims: "5"   # max number of PVCs allowed in this namespace
+```
+
+| Field | Meaning |
+|---|---|
+| `requests.storage` | Sum of all PVC storage requests in the namespace cannot exceed this |
+| `persistentvolumeclaims` | Total number of PVCs in the namespace cannot exceed this |
+
+If a developer tries to create a PVC that would push the namespace over the quota, Kubernetes rejects it immediately.
 
 ### 1.8 Quick Comparison
 
