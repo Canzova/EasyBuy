@@ -1,0 +1,59 @@
+# ==============================================================================
+# Nginx Ingress Manifest for AWS EKS
+# Usage: kubectl apply -f nginx-ingress.yaml
+#
+# IMPORTANT: This Ingress requires the AWS Load Balancer Controller to be
+# installed in your cluster BEFORE applying this file.
+# See commands.md → Section: "AWS Load Balancer Controller Setup"
+# ==============================================================================
+
+# Kubernetes API version for Ingress resources
+apiVersion: networking.k8s.io/v1
+
+# Kind tells Kubernetes this is an Ingress resource (HTTP/HTTPS routing rules)
+kind: Ingress
+
+metadata:
+  # Name of the Ingress resource
+  name: nginx-ingress
+
+  # Annotations configure how the AWS Load Balancer Controller provisions the ALB
+  annotations:
+    # Tells the AWS Load Balancer Controller to handle this Ingress (not nginx ingress controller)
+    kubernetes.io/ingress.class: alb
+
+    # internet-facing = ALB gets a public IP/DNS accessible from the internet
+    # use "internal" if you only want access from within the VPC
+    alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # ip mode = ALB routes traffic directly to Pod IPs (requires VPC CNI)
+    # more efficient than "instance" mode which routes via NodePort
+    alb.ingress.kubernetes.io/target-type: ip
+
+    # Opens port 80 on the ALB to accept incoming HTTP traffic
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+
+    # Health check path — ALB pings this endpoint on each Pod to confirm it is healthy
+    alb.ingress.kubernetes.io/healthcheck-path: /
+
+    # Tags applied to the AWS ALB resource in your AWS Console for identification
+    alb.ingress.kubernetes.io/tags: environment=dev,project=microdevops
+
+spec:
+  # Rules define how incoming HTTP requests are routed to backend Services
+  rules:
+      # Catch-all rule: matches ALL hostnames (no specific domain required for testing)
+      # Replace with your actual domain e.g. nginx.example.com once you have one
+    - http:
+        paths:
+          # Route ALL paths (/, /about, /api, etc.) to the nginx service
+          - path: /
+            # Prefix means any path starting with "/" will match this rule
+            pathType: Prefix
+            backend:
+              service:
+                # Must match the Service name defined in nginx-deployment.yaml
+                name: nginx-service
+                port:
+                  # Must match the port exposed by the nginx-service
+                  number: 80

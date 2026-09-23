@@ -1,0 +1,54 @@
+# ==============================================================================
+# AWS EKS Cluster Configuration Manifest (eksctl)
+# Usage: eksctl create cluster -f cluster.yaml
+# Note: Do NOT use 'kubectl apply -f cluster.yaml' — eksctl reads this file
+#       to provision AWS infrastructure, it is NOT a kubectl manifest
+# ==============================================================================
+
+# Tells VS Code YAML plugin to validate against the eksctl schema (not RKE/k8s)
+# yaml-language-server: $schema=https://raw.githubusercontent.com/eksctl-io/eksctl/main/pkg/apis/eksctl.io/v1alpha5/assets/schema.json
+
+# eksctl API version — always eksctl.io/v1alpha5 for modern eksctl
+apiVersion: eksctl.io/v1alpha5
+# Tells eksctl this document describes a full cluster (not a nodegroup-only config)
+kind: ClusterConfig
+
+metadata:
+  # Name of the EKS cluster that will be created in AWS
+  name: canzova-cluster1
+  # AWS region where the cluster will be provisioned
+  region: ap-south-1
+  # Kubernetes version to run on the control plane and worker nodes
+  version: "1.36"
+
+iam:
+  # Creates an OIDC provider for the cluster — required for IAM Roles for Service Accounts (IRSA)
+  # IRSA lets pods assume IAM roles without storing AWS credentials inside the pod
+  # With this each pod can have their own IAM role, and not dependent on the IAM role of the node it runs on
+  withOIDC: true
+
+managedNodeGroups:
+  # Managed Node Group — AWS manages the EC2 lifecycle (patching, replacement, scaling)
+  - name: canzova-cluster1
+    # EC2 instance type: t3.large = 2 vCPU, 8GB RAM
+    instanceType: t3.large
+    # Minimum number of nodes the group can scale down to
+    minSize: 1
+    # Maximum number of nodes the group can scale up to
+    maxSize: 4
+    # Number of nodes to start with when the cluster is first created
+    desiredCapacity: 2
+    # Root EBS volume size in GB attached to each worker node
+    volumeSize: 30
+    # gp3 = latest generation SSD, better performance and cheaper than gp2
+    volumeType: gp3
+    # false = nodes are placed in public subnets (simpler setup, no NAT Gateway cost)
+    privateNetworking: false
+    iam:
+      withAddonPolicies:
+        # Allows the EBS CSI driver to create/attach EBS volumes for PersistentVolumeClaims
+        ebs: true
+        # Allows the AWS Load Balancer Controller to create ALBs for Ingress resources
+        albIngress: true
+        # Allows nodes to send logs and metrics to Amazon CloudWatch
+        cloudWatch: true

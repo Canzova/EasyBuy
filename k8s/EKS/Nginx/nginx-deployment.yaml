@@ -1,0 +1,117 @@
+# Kubernetes API version for workload controllers
+apiVersion: apps/v1
+
+# Kind specifies that this resource is a Deployment controller
+kind: Deployment
+
+# Metadata block holds the name and labels for this Deployment
+metadata:
+  # Name of the Deployment resource
+  name: nginx-deployment
+  # Labels used for organization and filtering
+  labels:
+    # Application identifier label
+    app: nginx-app
+
+# Specification of the desired state for the Deployment
+spec:
+  # Number of identical Pod replicas to run across the cluster nodes
+  replicas: 2
+  # Selector defines how the Deployment finds which Pods to manage
+  selector:
+    # Match labels must match the template labels defined below
+    matchLabels:
+      # Key-value label pair identifying managed Pods
+      app: nginx-app
+  # Template defines the blueprint for newly created Pods
+  template:
+    # Pod metadata containing labels assigned to the Pod
+    metadata:
+      # Labels applied to each Pod replica
+      labels:
+        # App label used for Service discovery and selection
+        app: nginx-app
+    # Specification of the containers to run inside each Pod
+    spec:
+      # List of containers belonging to the Pod
+      containers:
+        # Container name identifier
+        - name: nginx
+          # Public container image from Docker Hub
+          image: nginx:1.25-alpine
+          # Port exposed by the container inside the Pod
+          ports:
+            # Container listens on standard HTTP port 80
+            - containerPort: 80
+          # Compute resource requests and limits to guarantee stability on worker nodes
+          resources:
+            # Minimum guaranteed resources required to schedule the Pod
+            requests:
+              # Guaranteed CPU allocation (100 millicores = 0.1 CPU core)
+              cpu: "100m"
+              # Guaranteed RAM allocation
+              memory: "128Mi"
+            # Hard upper limits the container cannot exceed
+            limits:
+              # Maximum allowed CPU before throttling occurs
+              cpu: "250m"
+              # Maximum allowed memory before OOM (Out of Memory) kill occurs
+              memory: "256Mi"
+          # Liveness probe checks if the container is running properly
+          livenessProbe:
+            # HTTP GET request sent to the container
+            httpGet:
+              # Health endpoint path
+              path: /
+              # Port to query on the container
+              port: 80
+            # Wait 5 seconds after container starts before performing the first probe
+            initialDelaySeconds: 5
+            # Repeat probe every 10 seconds
+            periodSeconds: 10
+          # Readiness probe checks if container is ready to accept user traffic
+          readinessProbe:
+            # HTTP GET request sent to the container
+            httpGet:
+              # Health endpoint path
+              path: /
+              # Port to query on the container
+              port: 80
+            # Wait 3 seconds before first readiness check
+            initialDelaySeconds: 3
+            # Repeat readiness probe every 5 seconds
+            periodSeconds: 5
+
+---
+# Kubernetes API version for networking and service discovery
+apiVersion: v1
+
+# Kind specifies that this resource is a Service
+kind: Service
+
+# Metadata block for the Service
+metadata:
+  # Name of the Service resource
+  name: nginx-service
+  # No annotations needed — traffic comes from the ALB (Ingress), not directly from internet
+
+# Specification of the Service routing behavior
+spec:
+  # ClusterIP = internal only, no AWS Load Balancer created
+  # The Ingress (ALB) routes external traffic to this Service internally
+  # This avoids creating a second unnecessary NLB and saves AWS costs
+  type: ClusterIP
+  # Selector identifies which Pods will receive traffic from this Service
+  selector:
+    # Matches the app label defined on the Nginx Pods
+    app: nginx-app
+  # List of ports mapped and exposed by the Service
+  ports:
+    # Human-readable port name
+    - name: http
+      # Public port exposed on the AWS Load Balancer
+      port: 80
+      # Target port on the backend Pod container to forward traffic to
+      targetPort: 80
+      # Transport protocol
+      protocol: TCP
