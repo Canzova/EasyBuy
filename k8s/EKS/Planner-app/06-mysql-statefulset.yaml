@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: planner-app
+  labels:
+    app: mysql
+spec:
+  # Must match the governing Service name below
+  serviceName: "mysql-service"
+  # Replicas must be 1 for standalone MySQL without replication clustering
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-statefulset
+  template:
+    metadata:
+      labels:
+        app: mysql-statefulset
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:9
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: MYSQL_USER
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: MYSQL_DATABASE
+          ports:
+            - containerPort: 3306
+              name: mysql
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-persistent-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        # Explicitly use the gp3 EBS CSI StorageClass created in 02-storageclass.yaml
+        storageClassName: ebs-gp3-sc
+        resources:
+          requests:
+            storage: 2Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: planner-app
+  labels:
+    app: mysql-service
+spec:
+  # Headless service required for StatefulSets (capital IP: clusterIP)
+  clusterIP: None
+  selector:
+    app: mysql-statefulset
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

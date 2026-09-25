@@ -1,0 +1,19 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-gp3-sc
+  annotations:
+    # Set this as default storageclass if desired (optional)
+    storageclass.kubernetes.io/is-default-class: "false"
+# AWS EBS CSI provisioner plugin : you also need to install the AWS EBS CSI driver in your cluster for this to work
+provisioner: ebs.csi.aws.com
+# gp3 is the latest AWS EBS general-purpose SSD (cheaper & faster than gp2)
+parameters:
+  type: gp3
+  encrypted: "true"
+reclaimPolicy: Retain # Retain EBS volume even if PVC is deleted to protect database data
+allowVolumeExpansion: true
+# CRUCIAL FOR AWS EKS MULTI-AZ:
+# Delays EBS volume creation until MySQL Pod is scheduled on a specific node.
+# Ensures the EBS volume is created in the exact same Availability Zone (AZ) as the Pod!
+volumeBindingMode: WaitForFirstConsumer

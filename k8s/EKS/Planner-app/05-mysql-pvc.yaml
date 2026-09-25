@@ -1,0 +1,24 @@
+# ==============================================================================
+# NOTE FOR STATEFULSET USERS:
+# You do NOT need to apply this file if you are using 06-mysql-statefulset.yaml!
+#
+# StatefulSets automatically create their own PVCs using 'volumeClaimTemplates'
+# (named: mysql-persistent-storage-mysql-0).
+# Applying this file manually would provision an extra unused EBS volume.
+# Keep this file ONLY if you switch MySQL back to a regular Deployment.
+# ==============================================================================
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: planner-app
+  labels:
+    app: mysql-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-gp3-sc
+  resources:
+    requests:
+      storage: 2Gi

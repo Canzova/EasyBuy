@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: planner-config-map
+  namespace: planner-app
+data:
+  # MySQL host is the Kubernetes Service name exposed by MySQL
+  DB_HOST: "mysql-service"
+  DB_PORT: "3306"
+  DB_NAME: "plannerdb"
+  DB_USERNAME: "planneruser"
+  MYSQL_DATABASE: "plannerdb"

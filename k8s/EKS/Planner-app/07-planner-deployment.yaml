@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: planner-deployment
+  namespace: planner-app
+  labels:
+    app: planner-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: planner-app-selector-name
+  template:
+    metadata:
+      labels:
+        app: planner-app-selector-name
+    spec:
+      # InitContainer prevents Spring Boot CrashLoopBackOff:
+      # Ensures MySQL is actively listening on port 3306 before Spring Boot boots up
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for MySQL database at mysql-service:3306 to accept connections..."
+              until nc -z -v -w3 mysql-service 3306; do
+                echo "MySQL not ready yet. Retrying in 3 seconds..."
+                sleep 3
+              done
+              echo "MySQL is up and ready! Starting Spring Boot app."
+      containers:
+        - name: planner-container
+          image: canzova/planner:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: DB_NAME
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: planner-config-map
+                  key: DB_USERNAME
+            # DB_PASSWORD is the standard property used in Spring Boot application.properties
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: DB_PASSWORD
+            # Also export MYSQL_PASSWORD just in case application.properties references it
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: planner-secrets
+                  key: MYSQL_PASSWORD
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: planner-service
+  namespace: planner-app
+  labels:
+    app: planner-service
+spec:
+  # ClusterIP: AWS Load Balancer Controller routes traffic directly to Pod IPs (ip target-type)
+  type: ClusterIP
+  selector:
+    app: planner-app-selector-name
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

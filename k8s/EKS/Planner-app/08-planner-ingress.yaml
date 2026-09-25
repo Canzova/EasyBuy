@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: planner-ingress
+  namespace: planner-app
+  annotations:
+    # Explicitly use the AWS Load Balancer Controller
+    kubernetes.io/ingress.class: alb
+
+    # internet-facing = Public ALB accessible from internet
+    alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # ip mode routes traffic directly to Pod IPs via VPC CNI (recommended for AWS EKS)
+    alb.ingress.kubernetes.io/target-type: ip
+
+    # Listen on HTTP port 80
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+
+    # Health check path checked by ALB Target Group
+    # Change to "/" if actuator is not enabled in your Spring Boot application
+    alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+    # Allows 200 (or 404 if path doesn't exist) to pass ALB health checks during testing
+    alb.ingress.kubernetes.io/success-codes: "200-399,404"
+
+    # AWS resource tags
+    alb.ingress.kubernetes.io/tags: Environment=dev,App=planner-backend
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: planner-service
+                port:
+                  number: 8080
