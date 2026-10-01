@@ -133,6 +133,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         return path.contains("/public/") ||
                 path.contains("/api/users/login") ||
                 path.contains("/api/users/refresh") ||
+                path.contains("/api/users/forgot-password") ||
+                path.contains("/api/users/verify-otp") ||
+                path.contains("/api/users/reset-password") ||
                 (path.contains("/api/users") && "POST".equalsIgnoreCase(method)) || // User registration
                 (path.contains("/product") && "GET".equalsIgnoreCase(method)) || // View products
                 (path.contains("/category") && "GET".equalsIgnoreCase(method)) || // View categories
@@ -203,7 +206,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 String extractedId = (slashIndex != -1) ? sub.substring(0, slashIndex) : sub;
 
                 // Avoid returning static endpoints as userIds
-                if (extractedId.equals("login") || extractedId.equals("refresh") || extractedId.equals("change-role")) {
+                if (extractedId.equals("login") || extractedId.equals("refresh") || extractedId.equals("change-role")
+                        || extractedId.equals("forgot-password") || extractedId.equals("verify-otp") || extractedId.equals("reset-password")) {
                     continue;
                 }
                 return extractedId;

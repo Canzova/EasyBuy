@@ -71,4 +71,26 @@ public class UserController {
         RefreshTokenResponse refreshTokenResponse = userService.updateRefreshAndAccessToken(refreshTokenRequest);
         return ResponseEntity.ok(refreshTokenResponse);
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<PasswordResetMessageResponse> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        userService.processForgotPassword(request);
+        return ResponseEntity.ok(PasswordResetMessageResponse.builder()
+                .message("OTP sent successfully to your registered email.")
+                .build());
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<VerifyOtpResponse> verifyOtp(@Valid @RequestBody VerifyOtpRequest request) {
+        VerifyOtpResponse response = userService.verifyOtp(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<PasswordResetMessageResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        userService.resetPassword(request);
+        return ResponseEntity.ok(PasswordResetMessageResponse.builder()
+                .message("Password has been reset successfully. You can now login with your new password.")
+                .build());
+    }
 }

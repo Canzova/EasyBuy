@@ -22,4 +22,10 @@ public interface UserService {
     LoginResponse loginUser(@Valid LoginRequest loginRequest);
 
     RefreshTokenResponse updateRefreshAndAccessToken(@Valid RefreshTokenRequest refreshTokenRequest);
+
+    void processForgotPassword(@Valid ForgotPasswordRequest request);
+
+    VerifyOtpResponse verifyOtp(@Valid VerifyOtpRequest request);
+
+    void resetPassword(@Valid ResetPasswordRequest request);
 }

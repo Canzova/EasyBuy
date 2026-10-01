@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ServiceRegistry" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="service-registery" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.easybuy.service_registery.ServiceRegistryApplication" />
+    <option name="VM_PARAMETERS" value="-javaagent:&quot;$PROJECT_DIR$/monitoring/opentelemetry-javaagent.jar&quot; -Dotel.service.name=service-registry -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=none -Dotel.logs.exporter=none -Dotel.javaagent.debug=true -Dotel.resource.attributes=deployment.environment=local,service.version=1.0" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

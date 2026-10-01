@@ -1,0 +1,229 @@
+2026-09-30 16:55:42 INFO  [main] traceId= spanId= c.e.c.CartOrderServiceApplicationTests : Starting CartOrderServiceApplicationTests using Java 25.0.2 with PID 55608 (started by canzova in /Users/canzova/IdeaProjects/MicroDevops/cart-order-service)
+2026-09-30 16:55:42 DEBUG [main] traceId= spanId= c.e.c.CartOrderServiceApplicationTests : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-09-30 16:55:42 INFO  [main] traceId= spanId= c.e.c.CartOrderServiceApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2026-09-30 16:55:42 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-09-30 16:55:42 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=cart-order-service, profiles=[default], label=null, version=81c6b54ba943cc23f3785a62bdfb85381b2433f3, state=
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=5bcfe3b3-3fbb-36e7-a1ad-e2dd160725b1
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-30 16:55:43 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6cf633eb
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-09-30 16:55:44 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/order_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.9
+	Default catalog/schema: order_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-30 16:55:44 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-30 16:55:44 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-09-30 16:55:45 INFO  [main] traceId= spanId= o.s.c.o.FeignClientFactoryBean : For 'USER-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2026-09-30 16:55:45 INFO  [main] traceId= spanId= o.s.c.o.FeignClientFactoryBean : For 'PRODUCT-CATEGORY-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2026-09-30 16:55:45 INFO  [main] traceId= spanId= o.s.c.o.FeignClientFactoryBean : For 'INVENTORY-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2026-09-30 16:55:45 INFO  [main] traceId= spanId= o.s.c.s.m.DirectWithAttributesChannel : Channel 'cart-order-service.springCloudBusInput' has 1 subscriber(s).
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-09-30 16:55:46 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 35 endpoints beneath base path '/actuator'
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.i.c.PublishSubscribeChannel : Channel 'cart-order-service.errorChannel' has 1 subscriber(s).
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : started bean '_org.springframework.integration.errorLogger'
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790767546475 with initial instances count: 5
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application CART-ORDER-SERVICE with eureka with status UP
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790767546480, current=UP, previous=STARTING]
+2026-09-30 16:55:46 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/10.19.63.112:cart-order-service:8081: registering service...
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Creating binder: rabbit
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Constructing binder child context for rabbit
+2026-09-30 16:55:46 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/10.19.63.112:cart-order-service:8081 - registration status: 204
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Caching the binder: rabbit
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.b.r.p.RabbitExchangeQueueProvisioner : declaring queue for inbound: springCloudBus.anonymous.-5FuHducTUaKuytsdz-Ccw, bound to: springCloudBus
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.a.r.c.CachingConnectionFactory : Attempting to connect to: [localhost:5672]
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.a.r.c.CachingConnectionFactory : Created new connection: rabbitConnectionFactory#6f1c9f54:0/SimpleConnection@577e0362 [delegate=amqp://user@127.0.0.1:5672/, localPort=58505]
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'rabbit-730649044.springCloudBusInput.errors' has 1 subscriber(s).
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'rabbit-730649044.springCloudBusInput.errors' has 2 subscriber(s).
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.s.i.a.i.AmqpInboundChannelAdapter : started bean 'inbound.springCloudBus.anonymous.-5FuHducTUaKuytsdz-Ccw'
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.k.common.config.AbstractConfig : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-order-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = order-group
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.rebootstrap.trigger.ms = 300000
+	metadata.recovery.strategy = rebootstrap
+	metric.reporters = [org.apache.kafka.common.metrics.JmxReporter]
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.assertion.algorithm = RS256
+	sasl.oauthbearer.assertion.claim.aud = null
+	sasl.oauthbearer.assertion.claim.exp.seconds = 300
+	sasl.oauthbearer.assertion.claim.iss = null
+	sasl.oauthbearer.assertion.claim.jti.include = false
+	sasl.oauthbearer.assertion.claim.nbf.seconds = 60
+	sasl.oauthbearer.assertion.claim.sub = null
+	sasl.oauthbearer.assertion.file = null
+	sasl.oauthbearer.assertion.private.key.file = null
+	sasl.oauthbearer.assertion.private.key.passphrase = null
+	sasl.oauthbearer.assertion.template.file = null
+	sasl.oauthbearer.client.credentials.client.id = null
+	sasl.oauthbearer.client.credentials.client.secret = null
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.header.urlencode = false
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.jwt.retriever.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtRetriever
+	sasl.oauthbearer.jwt.validator.class = class org.apache.kafka.common.security.oauthbearer.DefaultJwtValidator
+	sasl.oauthbearer.scope = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	share.acknowledgement.mode = implicit
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.k.c.t.i.KafkaMetricsCollector : initializing Kafka metrics collector
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.kafka.common.utils.AppInfoParser : Kafka version: 4.1.2
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.kafka.common.utils.AppInfoParser : Kafka commitId: c82fd9b934b4c1e6
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.kafka.common.utils.AppInfoParser : Kafka startTimeMs: 1790767546737
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= o.a.k.c.c.i.ClassicKafkaConsumer : [Consumer clientId=consumer-order-group-1, groupId=order-group] Subscribed to topic(s): PAYMENT_EVENT
+2026-09-30 16:55:46 INFO  [main] traceId= spanId= c.e.c.CartOrderServiceApplicationTests : Started CartOrderServiceApplicationTests in 8.159 seconds (process running for 8.737)
+2026-09-30 16:55:46 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= org.apache.kafka.clients.Metadata : [Consumer clientId=consumer-order-group-1, groupId=order-group] Cluster ID: 5L6g3nShT-eMCtK--X86sw
+2026-09-30 16:55:46 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Discovered group coordinator localhost:9092 (id: 2147483646 rack: null isFenced: false)
+2026-09-30 16:55:46 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] (Re-)joining group
+2026-09-30 16:55:46 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Request joining group due to: need to re-join with the given member-id: consumer-order-group-1-b0c3b567-3db9-4426-9742-d2f7d8aff85a
+2026-09-30 16:55:46 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] (Re-)joining group
+2026-09-30 16:55:47 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application CART-ORDER-SERVICE with eureka with status DOWN
+2026-09-30 16:55:47 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790767547072, current=DOWN, previous=UP]
+2026-09-30 16:55:47 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/10.19.63.112:cart-order-service:8081: registering service...
+2026-09-30 16:55:47 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/10.19.63.112:cart-order-service:8081 - registration status: 204
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Member consumer-order-group-1-b0c3b567-3db9-4426-9742-d2f7d8aff85a sending LeaveGroup request to coordinator localhost:9092 (id: 2147483646 rack: null isFenced: false) due to the consumer unsubscribed from all topics
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Request joining group due to: consumer pro-actively leaving the group
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ClassicKafkaConsumer : [Consumer clientId=consumer-order-group-1, groupId=order-group] Unsubscribed all topics or patterns and assigned partitions
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-09-30 16:55:47 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerCoordinator : [Consumer clientId=consumer-order-group-1, groupId=order-group] Request joining group due to: consumer pro-actively leaving the group
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.kafka.common.metrics.Metrics : Metrics scheduler closed
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.kafka.common.metrics.Metrics : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.kafka.common.metrics.Metrics : Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.kafka.common.metrics.Metrics : Metrics reporters closed
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.kafka.common.utils.AppInfoParser : App info kafka.consumer for consumer-order-group-1 unregistered
+2026-09-30 16:55:49 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.s.k.l.KafkaMessageListenerContainer : order-group: Consumer stopped
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.a.i.AmqpInboundChannelAdapter : stopped bean 'inbound.springCloudBus.anonymous.-5FuHducTUaKuytsdz-Ccw'
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'cart-order-service.rabbit-730649044.springCloudBusInput.errors' has 1 subscriber(s).
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'cart-order-service.rabbit-730649044.springCloudBusInput.errors' has 0 subscriber(s).
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.c.PublishSubscribeChannel : Channel 'cart-order-service.errorChannel' has 0 subscriber(s).
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : stopped bean '_org.springframework.integration.errorLogger'
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
+2026-09-30 16:55:50 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-09-30 16:55:53 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-09-30 16:55:53 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/10.19.63.112:cart-order-service:8081 - deregister  status: 200
+2026-09-30 16:55:53 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient

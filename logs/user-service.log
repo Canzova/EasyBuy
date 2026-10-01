@@ -1,0 +1,589 @@
+2026-09-30 16:43:30 INFO  [main] traceId= spanId= e.u.UserServiceApplication : Starting UserServiceApplication using Java 25.0.2 with PID 53455 (/Users/canzova/IdeaProjects/MicroDevops/user-service/target/classes started by canzova in /Users/canzova/IdeaProjects/MicroDevops)
+2026-09-30 16:43:30 DEBUG [main] traceId= spanId= e.u.UserServiceApplication : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-09-30 16:43:30 INFO  [main] traceId= spanId= e.u.UserServiceApplication : No active profile set, falling back to 1 default profile: "default"
+2026-09-30 16:43:30 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-09-30 16:43:30 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=user-service, profiles=[default], label=null, version=81c6b54ba943cc23f3785a62bdfb85381b2433f3, state=
+2026-09-30 16:43:31 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-30 16:43:31 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 138 ms. Found 3 JPA repository interfaces.
+2026-09-30 16:43:31 INFO  [main] traceId= spanId= o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-09-30 16:43:31 INFO  [main] traceId= spanId= o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-09-30 16:43:31 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=1b750df7-89ec-3597-a318-8c2b1eef0449
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8083 (http)
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1529 ms
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-30 16:43:32 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5022aaa3
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/userDB]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.13
+	Default catalog/schema: userDB/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-30 16:43:33 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.warn : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-09-30 16:43:33 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.warn : constraint "uk77s7lgq1dxugyc665ft669b1r" of relation "password_reset_token" does not exist, skipping
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-30 16:43:33 INFO  [main] traceId= spanId= o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsImpl
+2026-09-30 16:43:34 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-09-30 16:43:34 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.m.DirectWithAttributesChannel : Channel 'user-service.springCloudBusInput' has 1 subscriber(s).
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.i.c.PublishSubscribeChannel : Channel 'user-service.errorChannel' has 1 subscriber(s).
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : started bean '_org.springframework.integration.errorLogger'
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790766814834 with initial instances count: 3
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application USER-SERVICE with eureka with status UP
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790766814836, current=UP, previous=STARTING]
+2026-09-30 16:43:34 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083: registering service...
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Creating binder: rabbit
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Constructing binder child context for rabbit
+2026-09-30 16:43:34 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - registration status: 204
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.binder.DefaultBinderFactory : Caching the binder: rabbit
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.b.r.p.RabbitExchangeQueueProvisioner : declaring queue for inbound: springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw, bound to: springCloudBus
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.a.r.c.CachingConnectionFactory : Attempting to connect to: [localhost:5672]
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.a.r.c.CachingConnectionFactory : Created new connection: rabbitConnectionFactory#4904144d:0/SimpleConnection@56f73a03 [delegate=amqp://user@127.0.0.1:5672/, localPort=58168]
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'rabbit-46457395.springCloudBusInput.errors' has 1 subscriber(s).
+2026-09-30 16:43:34 INFO  [main] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'rabbit-46457395.springCloudBusInput.errors' has 2 subscriber(s).
+2026-09-30 16:43:35 INFO  [main] traceId= spanId= o.s.i.a.i.AmqpInboundChannelAdapter : started bean 'inbound.springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw'
+2026-09-30 16:43:35 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8083 (http) with context path '/'
+2026-09-30 16:43:35 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8083
+2026-09-30 16:43:35 INFO  [main] traceId= spanId= e.u.UserServiceApplication : Started UserServiceApplication in 9.221 seconds (process running for 10.804)
+2026-09-30 16:43:38 INFO  [http-nio-8083-exec-1] traceId=58027f3d2791dc2cff839ca0d8aa91f5 spanId=df383bc4b121101a o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-30 16:43:38 INFO  [http-nio-8083-exec-1] traceId=58027f3d2791dc2cff839ca0d8aa91f5 spanId=df383bc4b121101a o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
+2026-09-30 16:43:38 INFO  [http-nio-8083-exec-1] traceId=58027f3d2791dc2cff839ca0d8aa91f5 spanId=df383bc4b121101a o.s.web.servlet.DispatcherServlet : Completed initialization in 2 ms
+2026-09-30 16:48:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 16:53:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 16:58:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:03:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:07:58 INFO  [http-nio-8083-exec-2] traceId=8adf78020c13199a726f9de281218256 spanId=7a14c51d3902e605 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihal@gmail.com
+2026-09-30 17:07:58 INFO  [http-nio-8083-exec-2] traceId=8adf78020c13199a726f9de281218256 spanId=7a14c51d3902e605 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihal@gmail.com
+2026-09-30 17:08:00 ERROR [http-nio-8083-exec-2] traceId=8adf78020c13199a726f9de281218256 spanId=7a14c51d3902e605 e.u.service.email.ResendEmailService : Resend API error [status: 403 FORBIDDEN]: {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (nihalsingh2082002@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-09-30 17:08:18 INFO  [http-nio-8083-exec-4] traceId=5baad21fe47ae533b1daaacf95a94dba spanId=2fffaf42e92cdcb2 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihal@gmail.com
+2026-09-30 17:08:18 INFO  [http-nio-8083-exec-4] traceId=5baad21fe47ae533b1daaacf95a94dba spanId=2fffaf42e92cdcb2 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihal@gmail.com
+2026-09-30 17:08:19 ERROR [http-nio-8083-exec-4] traceId=5baad21fe47ae533b1daaacf95a94dba spanId=2fffaf42e92cdcb2 e.u.service.email.ResendEmailService : Resend API error [status: 403 FORBIDDEN]: {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (nihalsingh2082002@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-09-30 17:08:32 INFO  [http-nio-8083-exec-6] traceId=9c8513b15b25e12bc703e62425da1871 spanId=4639e693bd745dff e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihal@gmail.com
+2026-09-30 17:08:32 INFO  [http-nio-8083-exec-6] traceId=9c8513b15b25e12bc703e62425da1871 spanId=4639e693bd745dff e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihal@gmail.com
+2026-09-30 17:08:32 ERROR [http-nio-8083-exec-6] traceId=9c8513b15b25e12bc703e62425da1871 spanId=4639e693bd745dff e.u.service.email.ResendEmailService : Resend API error [status: 403 FORBIDDEN]: {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (nihalsingh2082002@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-09-30 17:08:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:09:25 INFO  [http-nio-8083-exec-1] traceId=9d04767d7334beaba8ad03ad4d6407c9 spanId=80414891886227fd e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:09:25 INFO  [http-nio-8083-exec-1] traceId=9d04767d7334beaba8ad03ad4d6407c9 spanId=80414891886227fd e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:09:26 INFO  [http-nio-8083-exec-1] traceId=9d04767d7334beaba8ad03ad4d6407c9 spanId=80414891886227fd e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:09:26 INFO  [http-nio-8083-exec-1] traceId=9d04767d7334beaba8ad03ad4d6407c9 spanId=80414891886227fd e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:09:33 INFO  [http-nio-8083-exec-2] traceId=79fb619fec415b6423d743a2452d8762 spanId=94c00c3527404ee6 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:09:33 INFO  [http-nio-8083-exec-2] traceId=79fb619fec415b6423d743a2452d8762 spanId=94c00c3527404ee6 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:09:34 INFO  [http-nio-8083-exec-2] traceId=79fb619fec415b6423d743a2452d8762 spanId=94c00c3527404ee6 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:09:34 INFO  [http-nio-8083-exec-2] traceId=79fb619fec415b6423d743a2452d8762 spanId=94c00c3527404ee6 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:11:12 INFO  [http-nio-8083-exec-1] traceId=0be1eef82f0b6937c9d8fac7d3fd1a1b spanId=f94b3774107d96af e.u.s.i.UserServiceImplementation : Verifying OTP for email: nihalsingh2082002@gmail.com
+2026-09-30 17:11:12 INFO  [http-nio-8083-exec-1] traceId=0be1eef82f0b6937c9d8fac7d3fd1a1b spanId=f94b3774107d96af e.u.s.i.UserServiceImplementation : OTP verified successfully for email: nihalsingh2082002@gmail.com. Reset token issued.
+2026-09-30 17:13:00 INFO  [http-nio-8083-exec-9] traceId=c3a27ebd63c30e8df41237154ff6c3e6 spanId=71f9ee5facb09deb e.u.s.i.UserServiceImplementation : Processing password reset with reset token
+2026-09-30 17:13:00 INFO  [http-nio-8083-exec-9] traceId=c3a27ebd63c30e8df41237154ff6c3e6 spanId=71f9ee5facb09deb e.u.s.i.UserServiceImplementation : Password successfully reset for user: nihalsingh2082002@gmail.com
+2026-09-30 17:13:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:18:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:18:39 INFO  [http-nio-8083-exec-5] traceId=0b724a0cf90f54604928dcc6ede7db27 spanId=07c834c9f7ec3f28 e.u.s.i.UserServiceImplementation : Invalid username or password
+org.springframework.security.authentication.BadCredentialsException: Bad credentials
+	at org.springframework.security.authentication.dao.DaoAuthenticationProvider.additionalAuthenticationChecks(DaoAuthenticationProvider.java:92)
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.performPreCheck(AbstractUserDetailsAuthenticationProvider.java:198)
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.authenticate(AbstractUserDetailsAuthenticationProvider.java:159)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:183)
+	at easybuy.user_service.service.implementations.UserServiceImplementation.loginUser(UserServiceImplementation.java:116)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:715)
+	at easybuy.user_service.service.implementations.UserServiceImplementation$$SpringCGLIB$$0.loginUser(<generated>)
+	at easybuy.user_service.controller.UserController.userLogin(UserController.java:65)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:376)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.servlet.v6_0.OpenTelemetryHandlerMappingFilter.doFilter(OpenTelemetryHandlerMappingFilter.java:78)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-09-30 17:19:08 INFO  [http-nio-8083-exec-8] traceId=b6897b9b52894e3e2b9c9827b0183043 spanId=abd891fbf458729a e.u.s.i.UserServiceImplementation : Invalid username or password
+org.springframework.security.authentication.BadCredentialsException: Bad credentials
+	at org.springframework.security.authentication.dao.DaoAuthenticationProvider.additionalAuthenticationChecks(DaoAuthenticationProvider.java:92)
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.performPreCheck(AbstractUserDetailsAuthenticationProvider.java:198)
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.authenticate(AbstractUserDetailsAuthenticationProvider.java:159)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:183)
+	at easybuy.user_service.service.implementations.UserServiceImplementation.loginUser(UserServiceImplementation.java:116)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:715)
+	at easybuy.user_service.service.implementations.UserServiceImplementation$$SpringCGLIB$$0.loginUser(<generated>)
+	at easybuy.user_service.controller.UserController.userLogin(UserController.java:65)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:376)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.servlet.v6_0.OpenTelemetryHandlerMappingFilter.doFilter(OpenTelemetryHandlerMappingFilter.java:78)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-09-30 17:20:38 INFO  [http-nio-8083-exec-4] traceId=0abe73d0b086c1d25496fa06e7d8c115 spanId=6fe0a51e0ac8a64f e.u.s.i.UserServiceImplementation : User nihalsingh2082002@gmail.com has been logged in
+2026-09-30 17:23:34 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:25:34 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.cloud.bus.event.RefreshListener : Received remote refresh request.
+2026-09-30 17:25:34 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-09-30 17:25:40 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=user-service, profiles=[default], label=null, version=7eda3c6c09912231c188e8c2fed9f3df69535855, state=
+2026-09-30 17:25:40 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - deregister  status: 200
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790769343427 with initial instances count: 7
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application USER-SERVICE with eureka with status DOWN
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790769343428, current=DOWN, previous=STARTING]
+2026-09-30 17:25:43 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083: registering service...
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.n.e.s.EurekaServiceRegistry : Registering application USER-SERVICE with eureka with status UP
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790769343429, current=UP, previous=DOWN]
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.cloud.bus.event.RefreshListener : Keys refreshed [config.client.version, resend.api-key]
+2026-09-30 17:25:43 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - registration status: 204
+2026-09-30 17:25:43 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083: registering service...
+2026-09-30 17:25:43 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - registration status: 204
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.c.s.m.DirectWithAttributesChannel : Channel 'user-service.springCloudBusOutput' has 1 subscriber(s).
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.a.r.c.CachingConnectionFactory : Attempting to connect to: [localhost:5672]
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.a.r.c.CachingConnectionFactory : Created new connection: rabbitConnectionFactory.publisher#6fab33da:0/SimpleConnection@31d98e91 [delegate=amqp://user@127.0.0.1:5672/, localPort=59984]
+2026-09-30 17:25:43 INFO  [springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw-1] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 o.s.amqp.rabbit.core.RabbitAdmin : Auto-declaring a non-durable, auto-delete, or exclusive Queue (springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw) durable:false, auto-delete:true, exclusive:true. It will be redeclared if the broker stops and is restarted while the connection factory is alive, but all messages will be lost.
+2026-09-30 17:27:47 INFO  [http-nio-8083-exec-4] traceId=b32f8d716391ab4c760ce508791f95b4 spanId=5e7bd81d7a9264f6 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:27:47 INFO  [http-nio-8083-exec-4] traceId=b32f8d716391ab4c760ce508791f95b4 spanId=5e7bd81d7a9264f6 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:27:49 INFO  [http-nio-8083-exec-4] traceId=b32f8d716391ab4c760ce508791f95b4 spanId=5e7bd81d7a9264f6 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:27:49 INFO  [http-nio-8083-exec-4] traceId=b32f8d716391ab4c760ce508791f95b4 spanId=5e7bd81d7a9264f6 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:29:35 INFO  [http-nio-8083-exec-3] traceId=a2aef28a9f7b88e2c01042fcd648a1b8 spanId=934f7934734a778e e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:29:35 INFO  [http-nio-8083-exec-3] traceId=a2aef28a9f7b88e2c01042fcd648a1b8 spanId=934f7934734a778e e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:29:36 INFO  [http-nio-8083-exec-3] traceId=a2aef28a9f7b88e2c01042fcd648a1b8 spanId=934f7934734a778e e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:29:36 INFO  [http-nio-8083-exec-3] traceId=a2aef28a9f7b88e2c01042fcd648a1b8 spanId=934f7934734a778e e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:30:43 INFO  [AsyncResolver-bootstrap-executor-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:34:47 INFO  [http-nio-8083-exec-4] traceId=4e861d110fa1cad3bb949c69d8e4c3f6 spanId=7e59b8d86a685020 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:34:47 INFO  [http-nio-8083-exec-4] traceId=4e861d110fa1cad3bb949c69d8e4c3f6 spanId=7e59b8d86a685020 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:34:49 INFO  [http-nio-8083-exec-4] traceId=4e861d110fa1cad3bb949c69d8e4c3f6 spanId=7e59b8d86a685020 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:34:49 INFO  [http-nio-8083-exec-4] traceId=4e861d110fa1cad3bb949c69d8e4c3f6 spanId=7e59b8d86a685020 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:35:43 INFO  [AsyncResolver-bootstrap-executor-%d] traceId=361d34df8c248674b0445012d117ab82 spanId=64c66f3452625248 c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-09-30 17:36:33 INFO  [http-nio-8083-exec-3] traceId=c8c7252763b1ae94d569dd224f7572f4 spanId=b736f9a32a5b3385 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:33 INFO  [http-nio-8083-exec-3] traceId=c8c7252763b1ae94d569dd224f7572f4 spanId=b736f9a32a5b3385 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:36:34 INFO  [http-nio-8083-exec-3] traceId=c8c7252763b1ae94d569dd224f7572f4 spanId=b736f9a32a5b3385 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:36:34 INFO  [http-nio-8083-exec-3] traceId=c8c7252763b1ae94d569dd224f7572f4 spanId=b736f9a32a5b3385 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:44 INFO  [http-nio-8083-exec-4] traceId=9cec4427e1945542e11996878957f411 spanId=51f0515dc0092012 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:44 INFO  [http-nio-8083-exec-4] traceId=9cec4427e1945542e11996878957f411 spanId=51f0515dc0092012 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:36:44 INFO  [http-nio-8083-exec-4] traceId=9cec4427e1945542e11996878957f411 spanId=51f0515dc0092012 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:36:44 INFO  [http-nio-8083-exec-4] traceId=9cec4427e1945542e11996878957f411 spanId=51f0515dc0092012 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:45 INFO  [http-nio-8083-exec-6] traceId=b6631e6cd310a86167549ad84f0cf1ce spanId=ca275e30d483b44c e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:45 INFO  [http-nio-8083-exec-6] traceId=b6631e6cd310a86167549ad84f0cf1ce spanId=ca275e30d483b44c e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:36:48 INFO  [http-nio-8083-exec-6] traceId=b6631e6cd310a86167549ad84f0cf1ce spanId=ca275e30d483b44c e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:36:48 INFO  [http-nio-8083-exec-6] traceId=b6631e6cd310a86167549ad84f0cf1ce spanId=ca275e30d483b44c e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:53 INFO  [http-nio-8083-exec-8] traceId=b8328087a01419aeaab6f6824858a0f4 spanId=75c232cb6fd53494 e.u.s.i.UserServiceImplementation : Processing forgot password request for email: nihalsingh2082002@gmail.com
+2026-09-30 17:36:53 INFO  [http-nio-8083-exec-8] traceId=b8328087a01419aeaab6f6824858a0f4 spanId=75c232cb6fd53494 e.u.service.email.ResendEmailService : Dispatching password reset OTP email via Resend to: nihalsingh2082002@gmail.com
+2026-09-30 17:36:54 INFO  [http-nio-8083-exec-8] traceId=b8328087a01419aeaab6f6824858a0f4 spanId=75c232cb6fd53494 e.u.service.email.ResendEmailService : Successfully dispatched OTP email via Resend to nihalsingh2082002@gmail.com
+2026-09-30 17:36:54 INFO  [http-nio-8083-exec-8] traceId=b8328087a01419aeaab6f6824858a0f4 spanId=75c232cb6fd53494 e.u.s.i.UserServiceImplementation : Password reset OTP generated and dispatched for email: nihalsingh2082002@gmail.com
+2026-09-30 17:37:01 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application USER-SERVICE with eureka with status DOWN
+2026-09-30 17:37:01 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790770021625, current=DOWN, previous=UP]
+2026-09-30 17:37:01 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083: registering service...
+2026-09-30 17:37:01 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - registration status: 204
+2026-09-30 17:37:01 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-30 17:37:03 INFO  [tomcat-shutdown] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Graceful shutdown complete
+2026-09-30 17:37:03 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.a.i.AmqpInboundChannelAdapter : stopped bean 'inbound.springCloudBus.anonymous.b6JoBHxkRA6j1pvVl2WUsw'
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'user-service.rabbit-46457395.springCloudBusInput.errors' has 1 subscriber(s).
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.s.binder.BinderErrorChannel : Channel 'user-service.rabbit-46457395.springCloudBusInput.errors' has 0 subscriber(s).
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.c.PublishSubscribeChannel : Channel 'user-service.errorChannel' has 0 subscriber(s).
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.i.endpoint.EventDrivenConsumer : stopped bean '_org.springframework.integration.errorLogger'
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
+2026-09-30 17:37:04 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-09-30 17:37:07 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-09-30 17:37:07 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 39 more
+
+2026-09-30 17:37:07 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused
+2026-09-30 17:37:07 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 40 more
+
+2026-09-30 17:37:07 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/USER-SERVICE/10.19.63.112:user-service:8083": Connect to http://localhost:8761 failed: Connection refused
+2026-09-30 17:37:07 ERROR [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_USER-SERVICE/10.19.63.112:user-service:8083 - de-registration failedCannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-09-30 17:37:07 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient

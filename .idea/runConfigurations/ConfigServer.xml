@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ConfigServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="envFilePaths">
+      <option value="$PROJECT_DIR$/config-server/secrets.env" />
+    </option>
+    <module name="config-server" />
+    <selectedOptions>
+      <option name="environmentVariables" />
+    </selectedOptions>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.easybuy.config_server.ConfigServerApplication" />
+    <option name="VM_PARAMETERS" value="-javaagent:&quot;$PROJECT_DIR$/monitoring/opentelemetry-javaagent.jar&quot; -Dotel.service.name=config-server -Dotel.exporter.otlp.endpoint=http://localhost:4317 -Dotel.exporter.otlp.protocol=grpc -Dotel.traces.exporter=otlp -Dotel.metrics.exporter=none -Dotel.logs.exporter=none -Dotel.javaagent.debug=true -Dotel.resource.attributes=deployment.environment=local,service.version=1.0" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

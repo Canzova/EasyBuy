@@ -3,13 +3,17 @@ package easybuy.user_service.service.implementations;
 import com.easybuy.common.exceptions.customException.BusinessException;
 import com.easybuy.common.exceptions.customException.EmailAlreadyExistsException;
 import com.easybuy.common.exceptions.customException.ResourceNotFoundException;
+import easybuy.user_service.configuration.OtpProperties;
 import easybuy.user_service.dto.*;
+import easybuy.user_service.entity.PasswordResetToken;
 import easybuy.user_service.entity.RefreshToken;
 import easybuy.user_service.entity.User;
+import easybuy.user_service.repository.PasswordResetTokenRepository;
 import easybuy.user_service.repository.RefreshTokenRepository;
 import easybuy.user_service.repository.UserRepository;
 import easybuy.user_service.security.JWTService;
 import easybuy.user_service.service.UserService;
+import easybuy.user_service.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -24,8 +28,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +46,10 @@ public class UserServiceImplementation implements UserService {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final EmailService emailService;
+    private final OtpProperties otpProperties;
+    private final SecureRandom secureRandom = new SecureRandom();
 
     @Override
     public UserDTO registerUser(UserDTO userDTO) {
@@ -184,5 +194,103 @@ public class UserServiceImplementation implements UserService {
                 .totalPages(userPage.getTotalPages())
                 .currentPage(userPage.getNumber())
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void processForgotPassword(ForgotPasswordRequest request) {
+        log.info("Processing forgot password request for email: {}", request.getEmail());
+
+        // 1. Verify user exists with the given email
+        userRepository.findByUsername(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User with given Email does not exists."));
+
+        // 2. Invalidate any existing unused OTP tokens for this email
+        passwordResetTokenRepository.invalidateExistingTokens(request.getEmail());
+
+        // 3. Generate a secure 6-digit OTP
+        String otp = String.format("%06d", secureRandom.nextInt(1_000_000));
+
+        // 4. Save the new OTP record to database
+        PasswordResetToken passwordResetToken = PasswordResetToken.builder()
+                .email(request.getEmail())
+                .otp(otp)
+                .otpExpiryTime(LocalDateTime.now().plusMinutes(otpProperties.getExpirationMinutes()))
+                .isUsed(false)
+                .build();
+
+        passwordResetTokenRepository.save(passwordResetToken);
+
+        // 5. Send OTP via email provider (Resend / AWS SES)
+        emailService.sendOtpEmail(request.getEmail(), otp);
+
+        log.info("Password reset OTP generated and dispatched for email: {}", request.getEmail());
+    }
+
+    @Override
+    @Transactional
+    public VerifyOtpResponse verifyOtp(VerifyOtpRequest request) {
+        log.info("Verifying OTP for email: {}", request.getEmail());
+
+        // 1. Find the latest active OTP record for this email
+        PasswordResetToken token = passwordResetTokenRepository
+                .findFirstByEmailAndIsUsedFalseOrderByCreatedAtDesc(request.getEmail())
+                .orElseThrow(() -> new BusinessException("No active OTP request found for this email. Please request an OTP first."));
+
+        // 2. Check if OTP is expired
+        if (LocalDateTime.now().isAfter(token.getOtpExpiryTime())) {
+            throw new BusinessException("OTP has expired. Please request a new OTP.");
+        }
+
+        // 3. Validate the OTP code
+        if (!token.getOtp().equals(request.getOtp())) {
+            throw new BusinessException("Invalid OTP. Please check the code and try again.");
+        }
+
+        // 4. Generate a secure temporary reset token for step 3
+        String resetToken = UUID.randomUUID().toString();
+        token.setResetToken(resetToken);
+        token.setResetTokenExpiryTime(LocalDateTime.now().plusMinutes(otpProperties.getResetTokenExpirationMinutes()));
+        passwordResetTokenRepository.save(token);
+
+        log.info("OTP verified successfully for email: {}. Reset token issued.", request.getEmail());
+
+        return VerifyOtpResponse.builder()
+                .message("OTP verified successfully. You may now reset your password.")
+                .resetToken(resetToken)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(ResetPasswordRequest request) {
+        log.info("Processing password reset with reset token");
+
+        // 1. Find the token record by resetToken
+        PasswordResetToken token = passwordResetTokenRepository
+                .findByResetTokenAndIsUsedFalse(request.getResetToken())
+                .orElseThrow(() -> new BusinessException("Invalid or already used reset token."));
+
+        // 2. Verify token expiry
+        if (token.getResetTokenExpiryTime() == null || LocalDateTime.now().isAfter(token.getResetTokenExpiryTime())) {
+            throw new BusinessException("Reset token has expired. Please initiate the password reset process again.");
+        }
+
+        // 3. Retrieve user
+        User user = userRepository.findByUsername(token.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User associated with this token does not exist."));
+
+        // 4. Encode and update password
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        // 5. Invalidate the reset token so it cannot be reused
+        token.setUsed(true);
+        passwordResetTokenRepository.save(token);
+
+        // 6. Invalidate all active refresh tokens for security (global session revocation)
+        refreshTokenRepository.deleteByUser(user);
+
+        log.info("Password successfully reset for user: {}", user.getUsername());
     }
 }

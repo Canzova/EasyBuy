@@ -13,4 +13,6 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     Optional<RefreshToken> findByUser_Username(@NotBlank(message = "User name cannot be null or blank.") String username);
 
     Optional<RefreshToken> findByUser(User user);
+
+    void deleteByUser(User user);
 }

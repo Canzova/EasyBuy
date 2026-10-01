@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EasyBuy - All Services" type="CompoundRunConfigurationType">
+    <toRun name="ServiceRegistry" type="SpringBootApplicationConfigurationType" />
+    <toRun name="ConfigServer" type="SpringBootApplicationConfigurationType" />
+    <toRun name="ApiGateway" type="SpringBootApplicationConfigurationType" />
+    <toRun name="UserService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AuthService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="ProductCategoryService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="InventoryService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="CartOrderService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="PaymentService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="NotificationService" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AiService" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
