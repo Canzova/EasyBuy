@@ -21,7 +21,9 @@ public class PaymentResponse {
     private PaymentStatus status;
     private String paymentGatewayTxnId;
     private  String paymentGatewayOrderId;
-    private  String paymentGatewaySignature;
+    private String paymentGatewaySignature;
+    private String currency;
+    private String razorpayKeyId;
     private Instant createdAt;
     private Instant updatedAt;
 }

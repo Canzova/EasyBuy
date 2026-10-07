@@ -9,18 +9,28 @@ import reactor.core.publisher.Mono;
 @RequestMapping
 public class ProductCategoryFallback {
 
-    @GetMapping("/product-category-service-fallback")
+    @RequestMapping("/product-category-service-fallback")
     public Mono<String>  productCategoryFallback(){
         return Mono.just("Product Category Service is down, try again later.");
     }
 
-    @GetMapping("/user-service-fallback")
+    @RequestMapping("/user-service-fallback")
     public Mono<String>  userServiceFallback(){
         return Mono.just("User Service is down, try again later.");
     }
 
-    @GetMapping("/inventory-service-fallback")
+    @RequestMapping("/inventory-service-fallback")
     public Mono<String>  inventoryServiceFallback(){
         return Mono.just("Inventory Service is down, try again later.");
+    }
+
+    @RequestMapping("/cart-order-service-fallback")
+    public Mono<String> cartOrderServiceFallback(){
+        return Mono.just("Cart Order Service is down, try again later.");
+    }
+
+    @RequestMapping("/payment-service-fallback")
+    public Mono<String> paymentServiceFallback(){
+        return Mono.just("Payment Service is down, try again later.");
     }
 }

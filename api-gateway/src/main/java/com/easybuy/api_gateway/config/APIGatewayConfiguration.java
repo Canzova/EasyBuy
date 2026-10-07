@@ -149,6 +149,33 @@ public class APIGatewayConfiguration {
                                 .uri("lb://INVENTORY-SERVICE")
                 )
 
+                .route("payment-service-route",
+                        predicateSpec -> predicateSpec.path("/payment-service/**")
+                                .filters(filter -> filter
+                                        .filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                        .rewritePath("/payment-service/?(?<remaining>.*)", "/${remaining}")
+                                        .requestRateLimiter(rateLimiter ->
+                                                rateLimiter
+                                                        .setKeyResolver(userIdKeyResolver())
+                                                        .setRateLimiter(redisRateLimiter())
+                                        )
+                                        .circuitBreaker(cb -> cb
+                                                .setName("payment-service-circuit-breaker")
+                                                .setFallbackUri("forward:/payment-service-fallback")
+                                        )
+                                        .retry(retryConfig -> retryConfig
+                                                .setRetries(3)
+                                                .setMethods(HttpMethod.GET, HttpMethod.POST)
+                                                .setBackoff(
+                                                        Duration.ofMillis(100),
+                                                        Duration.ofMillis(1000),
+                                                        2,
+                                                        true
+                                                )
+                                        )
+                                )
+                                .uri("lb://PAYMENT-SERVICE")
+                )
 
                 .build();
     }

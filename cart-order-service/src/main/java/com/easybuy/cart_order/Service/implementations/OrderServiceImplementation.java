@@ -184,11 +184,40 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public void updateOrderStatus(Long orderId, String paymentStatus) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found for given OrderId"));
-        order.setOrderStatus(OrderStatus.valueOf(paymentStatus));
-        if(paymentStatus.equalsIgnoreCase("FAILED")){
+        try {
+            order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
+        } catch (IllegalArgumentException e) {
+            log.warn("Unknown PaymentStatus value: {}", paymentStatus);
+        }
+
+        try {
+            order.setOrderStatus(OrderStatus.valueOf(paymentStatus));
+        } catch (IllegalArgumentException e) {
+            log.warn("Unknown OrderStatus value: {}", paymentStatus);
+        }
+
+        if (paymentStatus.equalsIgnoreCase("FAILED")) {
+            order.setPaymentStatus(PaymentStatus.FAILED);
             order.setOrderStatus(OrderStatus.CANCELED);
             order.setCancelledAt(Instant.now());
+
+            // Saga Compensating action: Release reserved inventory stock for each item in the cancelled order
+            if (order.getOrderItemList() != null) {
+                log.info("Payment FAILED for order {}. Releasing reserved inventory stocks.", orderId);
+                for (OrderItem orderItem : order.getOrderItemList()) {
+                    try {
+                        inventoryClient.releaseByProductId(orderItem.getProductId(), new ReleaseStock(orderItem.getQuantity()));
+                    } catch (Exception ex) {
+                        log.error("Failed to release inventory stock for productId: {} during failed payment compensation",
+                                orderItem.getProductId(), ex);
+                    }
+                }
+            }
+        } else if (paymentStatus.equalsIgnoreCase("PAID") || paymentStatus.equalsIgnoreCase("SUCCESS")) {
+            order.setPaymentStatus(PaymentStatus.PAID);
+            order.setOrderStatus(OrderStatus.CONFIRMED);
         }
+
         orderRepository.save(order);
     }
 

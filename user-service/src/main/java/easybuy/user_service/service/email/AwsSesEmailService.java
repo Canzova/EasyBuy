@@ -46,7 +46,7 @@ public class AwsSesEmailService implements EmailService {
                     .content(EmailContent.builder()
                             .simple(Message.builder()
                                     .subject(Content.builder()
-                                            .data("EasyBuy - Password Reset OTP")
+                                            .data("EasyBuy - Password Reset OTP From AWS SES")
                                             .charset("UTF-8")
                                             .build())
                                     .body(Body.builder()

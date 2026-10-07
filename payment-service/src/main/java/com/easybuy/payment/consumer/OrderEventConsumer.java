@@ -63,7 +63,7 @@ public class OrderEventConsumer {
             log.info("PaymentEvent created: {}", paymentEvent);
 
             log.info("Sending paymentEvent");
-            paymentEventProducer.paymentEventProducer(paymentEvent);
+            paymentEventProducer.publishPaymentEvent(paymentEvent);
         }catch (Exception e){
             log.error("Error occurred while sending paymentEvent", e);
 
@@ -73,7 +73,7 @@ public class OrderEventConsumer {
                     .build();
 
             log.info("Failed Payment Event created: {}", paymentEvent);
-            paymentEventProducer.paymentEventProducer(paymentEvent);
+            paymentEventProducer.publishPaymentEvent(paymentEvent);
             log.info("Sent Failed Payment Event");
         }
     }

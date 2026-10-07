@@ -131,6 +131,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     //api/users/login--POST
     private boolean isPublicEndpoint(String path, String method) {
         return path.contains("/public/") ||
+                path.contains("/webhook") || // Razorpay webhook callbacks (authenticated via HMAC signature in payment-service)
                 path.contains("/api/users/login") ||
                 path.contains("/api/users/refresh") ||
                 path.contains("/api/users/forgot-password") ||
